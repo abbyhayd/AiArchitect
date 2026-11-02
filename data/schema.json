@@ -1,0 +1,696 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/ai-architect/scenarios/schema.json",
+  "title": "AI Architect Scenario File",
+  "description": "Rules every scenario file (e.g. zoo.json) must follow. One file defines one game; the engine knows nothing about any specific scenario. Structure follows the 'Scenario file format' section of the System Design Through Games Platform Design.",
+  "type": "object",
+  "required": ["meta", "client", "meters", "rooms", "options", "events", "risks", "blueprint", "debrief"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "meta": { "$ref": "#/$defs/meta" },
+    "client": { "$ref": "#/$defs/client" },
+    "meters": {
+      "description": "Meters tracked in this game. Classic, ML and GenAI games can each track different things.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/meter" }
+    },
+    "rooms": {
+      "description": "Ordered rooms, each with scene art, goal, helper text and decisions.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/room" }
+    },
+    "options": {
+      "description": "Every selectable card: label, icon, hint, helper text, meter effects, effort and skill tags. Each option belongs to one decision (see rooms[].decisions[].id).",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/option" }
+    },
+    "events": {
+      "description": "Consequences that fire after launch, based on earlier choices.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/event" }
+    },
+    "risks": {
+      "description": "Warnings shown in trade-off checks, linked to blueprint parts.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/risk" }
+    },
+    "blueprint": { "$ref": "#/$defs/blueprint" },
+    "debrief": { "$ref": "#/$defs/debrief" },
+    "variants": {
+      "description": "Alternate hidden constraints and event triggers for replays, so memorizing answers does not work. Game 1 ships with one variant.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/variant" }
+    }
+  },
+
+  "$defs": {
+    "id": {
+      "description": "Stable identifier used for cross-references and logging.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_\\-]*$",
+      "maxLength": 64
+    },
+    "skillId": {
+      "description": "One of the twelve tracked skills (S1-S12).",
+      "type": "string",
+      "enum": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "S12"]
+    },
+    "skillList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/skillId" },
+      "uniqueItems": true
+    },
+    "effects": {
+      "description": "Map of meter ID to signed change, e.g. {\"privacy\": -2.5, \"budget\": 1}. Hidden from the player until the round is locked in.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/id" },
+      "additionalProperties": { "type": "number" }
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+
+    "meta": {
+      "type": "object",
+      "required": ["id", "title", "type", "difficulty", "focusSkills", "estimatedMinutes", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "type": { "type": "string", "enum": ["classic", "ML", "GenAI", "hybrid"] },
+        "difficulty": { "type": "string", "enum": ["intro", "intermediate", "advanced", "capstone", "interview"] },
+        "focusSkills": {
+          "description": "The 3-4 skills this game targets; used by the skill check.",
+          "allOf": [{ "$ref": "#/$defs/skillList" }],
+          "minItems": 1,
+          "maxItems": 4
+        },
+        "touchedSkills": { "$ref": "#/$defs/skillList" },
+        "estimatedMinutes": { "type": "integer", "minimum": 1 },
+        "version": {
+          "description": "Scenario file version, written into every log so research data can be tied to the exact content played.",
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "schemaVersion": { "type": "string" },
+        "language": { "type": "string", "default": "en" }
+      }
+    },
+
+    "client": {
+      "type": "object",
+      "required": ["name", "ask", "brief", "stakeholders"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "$ref": "#/$defs/text" },
+        "ask": { "description": "One-line summary of what the client wants.", "$ref": "#/$defs/text" },
+        "brief": {
+          "description": "The client's request, shown at the start and reopenable any time.",
+          "$ref": "#/$defs/text"
+        },
+        "sceneArt": { "type": "string" },
+        "stakeholders": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/stakeholder" }
+        },
+        "discovery": {
+          "description": "Rules for the discovery round.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "maxQuestions": { "type": "integer", "minimum": 1 },
+            "criticalBonus": {
+              "description": "Meter change awarded for each critical question asked (Demo 1: +1 trust).",
+              "$ref": "#/$defs/effects"
+            }
+          }
+        }
+      }
+    },
+
+    "stakeholder": {
+      "type": "object",
+      "required": ["id", "name", "role", "question", "answer", "critical"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/text" },
+        "role": { "$ref": "#/$defs/text" },
+        "icon": { "type": "string" },
+        "shortQuestion": { "description": "Card label for the question.", "type": "string" },
+        "question": { "description": "Full question, shown in the helper.", "$ref": "#/$defs/text" },
+        "answer": { "description": "Full answer revealed when asked.", "$ref": "#/$defs/text" },
+        "shortAnswer": { "description": "Speech-bubble version of the answer.", "type": "string" },
+        "critical": {
+          "description": "True if this is one of the most important questions (earns the discovery bonus and tokens).",
+          "type": "boolean"
+        },
+        "reveals": {
+          "description": "Hidden constraint this answer uncovers, e.g. 'sensitive files share a drive with public FAQs'.",
+          "type": "string"
+        },
+        "revealsConstraint": {
+          "description": "ID of a hidden constraint, usable in trigger rules and variants.",
+          "$ref": "#/$defs/id"
+        },
+        "skills": { "$ref": "#/$defs/skillList" }
+      }
+    },
+
+    "meter": {
+      "type": "object",
+      "required": ["id", "name", "start", "target", "priority"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/text" },
+        "icon": { "type": "string" },
+        "description": { "type": "string" },
+        "min": { "type": "number", "default": 0 },
+        "max": { "type": "number", "default": 10 },
+        "start": { "type": "number" },
+        "target": { "description": "Client target for this meter.", "type": "number" },
+        "priority": {
+          "description": "Hidden client priority. High-priority meters count toward the skill check.",
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        },
+        "warnBelow": { "type": "number", "default": 3 },
+        "crisisAt": { "type": "number", "default": 0 }
+      }
+    },
+
+    "room": {
+      "type": "object",
+      "required": ["id", "title", "kind", "goal"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "kind": {
+          "description": "Controls which room screen the engine shows.",
+          "type": "string",
+          "enum": ["brief", "discovery", "decisions", "consequences", "debrief"]
+        },
+        "scene": {
+          "description": "Scene art for the room.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "image": { "type": "string" },
+            "alt": { "type": "string" }
+          }
+        },
+        "goal": { "$ref": "#/$defs/text" },
+        "helperText": { "description": "Why the room matters; shown in the helper notes.", "type": "string" },
+        "helperReaction": {
+          "description": "Optional short helper reactions shown after lock-in.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "effortBudget": {
+          "description": "Effort points (tokens) the player may spend across this room's decisions.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "decisions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/decision" }
+        },
+        "reflectionPrompt": {
+          "description": "The helper's question at this room's trade-off check.",
+          "type": "string"
+        },
+        "tradeOffCheck": {
+          "description": "Whether to show risk warnings after this room.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean", "default": true },
+            "showRisks": { "type": "boolean", "default": true }
+          }
+        },
+        "skills": { "$ref": "#/$defs/skillList" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "decisions" } }, "required": ["kind"] },
+          "then": { "required": ["decisions"] }
+        }
+      ]
+    },
+
+    "decision": {
+      "type": "object",
+      "required": ["id", "prompt", "selection"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "prompt": { "$ref": "#/$defs/text" },
+        "helperText": { "type": "string" },
+        "selection": { "type": "string", "enum": ["single", "multi"] },
+        "minPicks": { "type": "integer", "minimum": 0 },
+        "maxPicks": { "type": "integer", "minimum": 1 },
+        "dependsOn": {
+          "description": "Show this decision only when the rule is true (e.g. a model choice per assistant).",
+          "$ref": "#/$defs/rule"
+        },
+        "locked": {
+          "description": "If true, the choice cannot be changed after lock-in.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+
+    "option": {
+      "type": "object",
+      "required": ["id", "decision", "label", "effects"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "decision": { "description": "ID of the decision this option belongs to.", "$ref": "#/$defs/id" },
+        "value": { "description": "Short value used in trigger rules (e.g. 'everything', 'name'). Defaults to the option ID.", "type": "string" },
+        "label": { "description": "Short card label.", "$ref": "#/$defs/text" },
+        "icon": { "type": "string" },
+        "hint": { "description": "One-line hint shown on the card (cost and speed are visible; meter effects are not).", "type": "string" },
+        "cost": { "description": "Visible cost cue shown on the card.", "type": "string" },
+        "speed": { "description": "Visible speed cue shown on the card.", "type": "string" },
+        "helperText": { "description": "Full description shown in the helper notes.", "type": "string" },
+        "effects": { "$ref": "#/$defs/effects" },
+        "effort": { "type": "number", "minimum": 0, "default": 0 },
+        "skills": { "$ref": "#/$defs/skillList" },
+        "tokens": {
+          "description": "Tokens earned for picking this option when it matches the client's priorities.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "reaction": { "description": "Short helper reaction after this option is chosen.", "type": "string" },
+        "when": {
+          "description": "Optional conditional effects: extra effects applied only when the rule is true (e.g. a choice made earlier).",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["if", "effects"],
+            "additionalProperties": false,
+            "properties": {
+              "if": { "$ref": "#/$defs/rule" },
+              "effects": { "$ref": "#/$defs/effects" }
+            }
+          }
+        }
+      }
+    },
+
+    "rule": {
+      "description": "Trigger rule evaluated by the engine over the player's choices, discovery questions and meters. Combine with 'all', 'any' and 'not'. Example: {\"any\": [{\"choice\": \"3A\", \"is\": \"everything\"}, {\"choice\": \"4D\", \"is\": \"name\"}]}",
+      "oneOf": [
+        {
+          "title": "all",
+          "type": "object",
+          "required": ["all"],
+          "additionalProperties": false,
+          "properties": {
+            "all": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/rule" } }
+          }
+        },
+        {
+          "title": "any",
+          "type": "object",
+          "required": ["any"],
+          "additionalProperties": false,
+          "properties": {
+            "any": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/rule" } }
+          }
+        },
+        {
+          "title": "not",
+          "type": "object",
+          "required": ["not"],
+          "additionalProperties": false,
+          "properties": {
+            "not": { "$ref": "#/$defs/rule" }
+          }
+        },
+        {
+          "title": "choice condition",
+          "type": "object",
+          "required": ["choice"],
+          "additionalProperties": false,
+          "properties": {
+            "choice": { "description": "Decision ID.", "$ref": "#/$defs/id" },
+            "is": { "description": "Picked option's value (or ID) equals this.", "type": "string" },
+            "isNot": { "type": "string" },
+            "isAnyOf": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+            "includes": { "description": "For multi-select decisions: the set of picks contains this value.", "type": "string" },
+            "answered": { "description": "True matches if the decision has any pick; false if it has none.", "type": "boolean" }
+          },
+          "anyOf": [
+            { "required": ["is"] },
+            { "required": ["isNot"] },
+            { "required": ["isAnyOf"] },
+            { "required": ["includes"] },
+            { "required": ["answered"] }
+          ]
+        },
+        {
+          "title": "meter condition",
+          "type": "object",
+          "required": ["meter"],
+          "additionalProperties": false,
+          "properties": {
+            "meter": { "$ref": "#/$defs/id" },
+            "lt": { "type": "number" },
+            "lte": { "type": "number" },
+            "gt": { "type": "number" },
+            "gte": { "type": "number" }
+          },
+          "anyOf": [
+            { "required": ["lt"] },
+            { "required": ["lte"] },
+            { "required": ["gt"] },
+            { "required": ["gte"] }
+          ]
+        },
+        {
+          "title": "asked condition",
+          "type": "object",
+          "required": ["asked"],
+          "additionalProperties": false,
+          "properties": {
+            "asked": { "description": "Stakeholder ID. True if the player asked (or did not ask) this question.", "$ref": "#/$defs/id" },
+            "is": { "type": "boolean", "default": true }
+          }
+        },
+        {
+          "title": "constraint condition",
+          "type": "object",
+          "required": ["constraint"],
+          "additionalProperties": false,
+          "properties": {
+            "constraint": { "description": "Hidden constraint ID (see stakeholders[].revealsConstraint). True if present in the active variant.", "$ref": "#/$defs/id" },
+            "active": { "type": "boolean", "default": true }
+          }
+        },
+        {
+          "title": "always",
+          "type": "object",
+          "required": ["always"],
+          "additionalProperties": false,
+          "properties": {
+            "always": { "const": true }
+          }
+        }
+      ]
+    },
+
+    "event": {
+      "type": "object",
+      "required": ["id", "title", "headline", "trigger", "damage"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "headline": { "description": "News-style headline shown on the main screen.", "$ref": "#/$defs/text" },
+        "story": { "description": "Full story behind the headline, shown in the helper.", "type": "string" },
+        "icon": { "type": "string" },
+        "trigger": { "$ref": "#/$defs/rule" },
+        "damage": { "description": "Meter changes if the event fires and is not mitigated.", "$ref": "#/$defs/effects" },
+        "mitigation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pilotMultiplier": {
+              "description": "Damage multiplier when the launch was a pilot (Demo 1: 0.5).",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "monitoringMultiplier": {
+              "description": "Additional multiplier when the matching monitoring tool is active (Demo 1: 0.5).",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            }
+          }
+        },
+        "monitoringOption": {
+          "description": "Option ID of the monitoring tool that would have caught this event.",
+          "$ref": "#/$defs/id"
+        },
+        "fix": {
+          "description": "Emergency fix the player can buy instead of accepting the loss.",
+          "type": "object",
+          "required": ["label", "cost"],
+          "additionalProperties": false,
+          "properties": {
+            "label": { "$ref": "#/$defs/text" },
+            "description": { "type": "string" },
+            "cost": { "description": "Meter changes the fix costs (e.g. budget -1.5).", "$ref": "#/$defs/effects" },
+            "recovers": { "description": "Meter changes the fix gives back.", "$ref": "#/$defs/effects" }
+          }
+        },
+        "skills": { "$ref": "#/$defs/skillList" }
+      }
+    },
+
+    "risk": {
+      "type": "object",
+      "required": ["id", "text", "trigger"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "text": {
+          "description": "Plain-language warning. Hints at consequences without saying exactly what will happen.",
+          "$ref": "#/$defs/text"
+        },
+        "trigger": { "$ref": "#/$defs/rule" },
+        "severity": { "type": "string", "enum": ["low", "medium", "high"], "default": "medium" },
+        "blueprintPart": { "description": "Blueprint part that gets the red outline and '!'.", "$ref": "#/$defs/id" },
+        "room": { "description": "Room after which this risk first becomes visible.", "$ref": "#/$defs/id" },
+        "relatedEvent": { "description": "Event this risk foreshadows (not shown to the player).", "$ref": "#/$defs/id" },
+        "skills": { "$ref": "#/$defs/skillList" }
+      }
+    },
+
+    "blueprint": {
+      "description": "The system diagram: the component palette, layout, and which choices fill each part in.",
+      "type": "object",
+      "required": ["parts"],
+      "additionalProperties": false,
+      "properties": {
+        "layers": {
+          "description": "Rows or bands of the diagram, in order (e.g. users, guardrails, assistants, knowledge, operations).",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "label"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "label": { "$ref": "#/$defs/text" }
+            }
+          }
+        },
+        "parts": {
+          "description": "Component palette: every part that can appear in the diagram.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "label"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "label": { "$ref": "#/$defs/text" },
+              "kind": {
+                "type": "string",
+                "enum": ["client", "load-balancer", "app", "cache", "database", "queue", "service", "model", "vector-store", "guardrail", "human", "monitor", "storage", "other"]
+              },
+              "icon": { "type": "string" },
+              "layer": { "$ref": "#/$defs/id" },
+              "position": {
+                "description": "Grid position within the layer.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "col": { "type": "integer", "minimum": 0 },
+                  "row": { "type": "integer", "minimum": 0 }
+                }
+              },
+              "initial": {
+                "description": "Appearance before any decision fills it in.",
+                "type": "string",
+                "enum": ["dashed", "hidden", "solid"],
+                "default": "dashed"
+              },
+              "fills": {
+                "description": "Which choices make this part appear solid (and optionally change its label).",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["when"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "when": { "$ref": "#/$defs/rule" },
+                    "label": { "type": "string" },
+                    "visible": { "type": "boolean", "default": true }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "connections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to"],
+            "additionalProperties": false,
+            "properties": {
+              "from": { "$ref": "#/$defs/id" },
+              "to": { "$ref": "#/$defs/id" },
+              "label": { "type": "string" },
+              "when": { "description": "Draw this connection only when the rule is true.", "$ref": "#/$defs/rule" }
+            }
+          }
+        }
+      }
+    },
+
+    "debrief": {
+      "type": "object",
+      "required": ["reflectionPrompts", "expertDesign"],
+      "additionalProperties": false,
+      "properties": {
+        "intro": { "type": "string" },
+        "reflectionPrompts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "text"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "text": { "$ref": "#/$defs/text" },
+              "skills": { "$ref": "#/$defs/skillList" },
+              "minWords": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "expertDesign": {
+          "type": "object",
+          "required": ["choices"],
+          "additionalProperties": false,
+          "properties": {
+            "choices": {
+              "description": "Map of decision ID to the option ID(s) the expert picks.",
+              "type": "object",
+              "propertyNames": { "$ref": "#/$defs/id" },
+              "additionalProperties": {
+                "oneOf": [
+                  { "$ref": "#/$defs/id" },
+                  { "type": "array", "items": { "$ref": "#/$defs/id" } }
+                ]
+              }
+            },
+            "askedQuestions": {
+              "description": "Stakeholder IDs the expert would ask.",
+              "type": "array",
+              "items": { "$ref": "#/$defs/id" }
+            },
+            "expectedEvents": {
+              "description": "Event IDs the expert design is expected to trigger (used by automated tests).",
+              "type": "array",
+              "items": { "$ref": "#/$defs/id" }
+            }
+          }
+        },
+        "rationale": {
+          "description": "Why the expert chose what they did.",
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "object",
+              "propertyNames": { "$ref": "#/$defs/id" },
+              "additionalProperties": { "type": "string" }
+            }
+          ]
+        },
+        "reportCards": {
+          "description": "Optional ending titles based on play style.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["title", "when"],
+            "additionalProperties": false,
+            "properties": {
+              "title": { "$ref": "#/$defs/text" },
+              "description": { "type": "string" },
+              "when": { "$ref": "#/$defs/rule" }
+            }
+          }
+        }
+      }
+    },
+
+    "variant": {
+      "description": "A replay variant: different hidden constraints and event triggers.",
+      "type": "object",
+      "required": ["id", "title"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "description": { "description": "e.g. 'Variant B: a ferry is cancelled mid-sale'.", "type": "string" },
+        "constraints": {
+          "description": "Hidden constraint IDs active in this variant.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "stakeholderAnswers": {
+          "description": "Replacement answers keyed by stakeholder ID.",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "answer": { "type": "string" },
+              "shortAnswer": { "type": "string" },
+              "reveals": { "type": "string" },
+              "revealsConstraint": { "$ref": "#/$defs/id" }
+            }
+          }
+        },
+        "eventTriggers": {
+          "description": "Replacement trigger rules keyed by event ID.",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": { "$ref": "#/$defs/rule" }
+        },
+        "extraEvents": {
+          "description": "Events that exist only in this variant (e.g. a mid-game twist).",
+          "type": "array",
+          "items": { "$ref": "#/$defs/event" }
+        },
+        "optionEffects": {
+          "description": "Replacement meter effects keyed by option ID.",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": { "$ref": "#/$defs/effects" }
+        },
+        "teaser": { "description": "Replay hook shown after the debrief.", "type": "string" }
+      }
+    }
+  }
+}

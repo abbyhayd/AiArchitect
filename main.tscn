@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cpb0qja4ik2xj"]
+
+[ext_resource type="FontFile" uid="uid://4eii2mw6fwrr" path="res://ui/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf" id="1_o5qli"]
+
+[node name="Main" type="Node2D" unique_id=1063428658]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=774561172]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=576720119]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -185.0
+offset_right = 240.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_o5qli")
+theme_override_font_sizes/font_size = 91
+text = "AI Architect"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=703524935]
+custom_minimum_size = Vector2(300, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -10.0
+offset_right = 150.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Start" type="Button" parent="CanvasLayer/VBoxContainer" unique_id=1033884617]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_o5qli")
+theme_override_font_sizes/font_size = 50
+text = "Start"
+
+[node name="Options" type="Button" parent="CanvasLayer/VBoxContainer" unique_id=620386644]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_o5qli")
+theme_override_font_sizes/font_size = 50
+text = "Options"

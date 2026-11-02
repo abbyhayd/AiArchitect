@@ -1,0 +1,2443 @@
+{
+  "$schema": "./schema.json",
+  "meta": {
+    "id": "evergreen-zoo",
+    "title": "Evergreen City Zoo",
+    "type": "GenAI",
+    "difficulty": "intro",
+    "focusSkills": [
+      "S1",
+      "S3",
+      "S5",
+      "S11"
+    ],
+    "touchedSkills": [
+      "S2",
+      "S4",
+      "S7",
+      "S10",
+      "S12"
+    ],
+    "estimatedMinutes": 25,
+    "version": "0.1.0"
+  },
+  "client": {
+    "name": "Evergreen City Zoo",
+    "ask": "A public visitor bot and an internal staff assistant.",
+    "brief": "\"We want a friendly assistant on our website that answers visitor questions: tickets, hours, events, accessibility, animal facts. And we want something for our own people, so a new keeper or volunteer can quickly find the right procedure. We're a conservation organization, so whatever you build should reflect our values.\"\n\nYou're the lead AI engineer at Northbound AI Consulting. Evergreen City Zoo is a nonprofit with about 1 million visitors a year, 300 staff and 500 volunteers. Guest services answers about 2,000 repetitive calls and emails a week, and new staff struggle to find procedures spread across binders, PDFs and a shared drive. The first-year budget is $60,000. They want two assistants: a public visitor bot and an internal staff assistant. There's no single winning score: the client has priorities, and you'll only learn all of them if you ask the right questions.\n\nVisitor bot: used by families, tourists, non-English speakers and visitors with disabilities. Questions about prices, hours, parking, access and animal facts. High and spiky traffic.\n\nStaff assistant: used by keepers, vets, guest services, security and volunteers (about 800 users). Questions about feeding, enclosure protocols, emergencies and HR policy. Low and steady traffic.",
+    "stakeholders": [
+      {
+        "id": "q1",
+        "name": "Marketing director",
+        "role": "Marketing director",
+        "icon": "char_marketing_director",
+        "shortQuestion": "Who visits?",
+        "question": "Who are your visitors?",
+        "answer": "About 30% of our visitors prefer Spanish, Mandarin or Vietnamese.",
+        "shortAnswer": "30% of visitors prefer a language other than English",
+        "critical": false,
+        "reveals": "30% of visitors prefer a language other than English",
+        "revealsConstraint": "multilingual_visitors",
+        "skills": [
+          "S1",
+          "S12"
+        ]
+      },
+      {
+        "id": "q2",
+        "name": "Guest services lead",
+        "role": "Guest services lead",
+        "icon": "char_guest_services_lead",
+        "shortQuestion": "Busiest times?",
+        "question": "What are your busiest times?",
+        "answer": "Summer weekends. Traffic is about 8 times a normal weekday.",
+        "shortAnswer": "8× traffic spikes on summer weekends",
+        "critical": false,
+        "reveals": "8× traffic spikes on summer weekends",
+        "revealsConstraint": "summer_traffic_spikes",
+        "skills": [
+          "S1",
+          "S2"
+        ]
+      },
+      {
+        "id": "q3",
+        "name": "Operations manager",
+        "role": "Operations manager",
+        "icon": "char_operations_manager",
+        "shortQuestion": "Which documents?",
+        "question": "What documents would the assistant use?",
+        "answer": "Website FAQs, plus animal-care manuals. Most manuals are scanned PDFs, many 3+ years old.",
+        "shortAnswer": "Care manuals are old scanned PDFs",
+        "critical": false,
+        "reveals": "Care manuals are old scanned PDFs",
+        "revealsConstraint": "scanned_care_manuals",
+        "skills": [
+          "S1",
+          "S11"
+        ]
+      },
+      {
+        "id": "q4",
+        "name": "Communications lead",
+        "role": "Communications lead",
+        "icon": "char_communications_lead",
+        "shortQuestion": "Who updates info?",
+        "question": "Who keeps information up to date?",
+        "answer": "Nobody owns that. Updates happen when someone notices.",
+        "shortAnswer": "No one owns content updates",
+        "critical": false,
+        "reveals": "No one owns content updates",
+        "revealsConstraint": "no_content_owner",
+        "skills": [
+          "S1",
+          "S4"
+        ]
+      },
+      {
+        "id": "q5",
+        "name": "IT & security lead",
+        "role": "IT & security lead",
+        "icon": "char_it_and_security_lead",
+        "shortQuestion": "What's sensitive?",
+        "question": "What data is sensitive?",
+        "answer": "Security schedules and HR files sit in the same shared drive as the public FAQs.",
+        "shortAnswer": "Sensitive files share a drive with public FAQs",
+        "critical": true,
+        "reveals": "Sensitive files share a drive with public FAQs",
+        "revealsConstraint": "sensitive_files_on_shared_drive",
+        "skills": [
+          "S1",
+          "S5"
+        ]
+      },
+      {
+        "id": "q6",
+        "name": "Head veterinarian",
+        "role": "Head veterinarian",
+        "icon": "char_head_veterinarian",
+        "shortQuestion": "If it's wrong?",
+        "question": "What happens if the assistant is wrong?",
+        "answer": "An outdated feeding or medication protocol could harm an animal.",
+        "shortAnswer": "Wrong care advice can harm animals",
+        "critical": true,
+        "reveals": "Wrong care advice can harm animals",
+        "revealsConstraint": "animal_safety_risk",
+        "skills": [
+          "S1",
+          "S12"
+        ]
+      },
+      {
+        "id": "q7",
+        "name": "Accessibility coordinator",
+        "role": "Accessibility coordinator",
+        "icon": "char_accessibility_coordinator",
+        "shortQuestion": "Accessibility needs?",
+        "question": "Do you have accessibility requirements?",
+        "answer": "Yes. The site must meet WCAG 2.1 AA: screen readers and plain language.",
+        "shortAnswer": "Must meet WCAG 2.1 AA",
+        "critical": true,
+        "reveals": "Must meet WCAG 2.1 AA",
+        "revealsConstraint": "wcag_aa_required",
+        "skills": [
+          "S1",
+          "S12"
+        ]
+      },
+      {
+        "id": "q8",
+        "name": "Finance director",
+        "role": "Finance director",
+        "icon": "char_finance_director",
+        "shortQuestion": "Running budget?",
+        "question": "What is your real budget for running costs?",
+        "answer": "The board caps ongoing costs at $1,500 a month after launch.",
+        "shortAnswer": "Running costs capped at $1,500/month",
+        "critical": true,
+        "reveals": "Running costs capped at $1,500/month",
+        "revealsConstraint": "running_cost_cap",
+        "skills": [
+          "S1",
+          "S2"
+        ]
+      },
+      {
+        "id": "q9",
+        "name": "Executive director",
+        "role": "Executive director",
+        "icon": "char_executive_director",
+        "shortQuestion": "What is success?",
+        "question": "How do you measure success?",
+        "answer": "Fewer calls to guest services, happy visitors, and staff who actually use it.",
+        "shortAnswer": "Success = fewer calls + satisfaction + staff adoption",
+        "critical": false,
+        "reveals": "Success = fewer calls + satisfaction + staff adoption",
+        "revealsConstraint": "success_measures",
+        "skills": [
+          "S1",
+          "S3"
+        ]
+      },
+      {
+        "id": "q10",
+        "name": "Sustainability officer",
+        "role": "Sustainability officer",
+        "icon": "char_sustainability_officer",
+        "shortQuestion": "Mission fit?",
+        "question": "How does this fit your mission?",
+        "answer": "We publicly report our carbon footprint. The board will ask about energy use.",
+        "shortAnswer": "Board reports the zoo's carbon footprint",
+        "critical": false,
+        "reveals": "Board reports the zoo's carbon footprint",
+        "revealsConstraint": "carbon_reporting",
+        "skills": [
+          "S1",
+          "S3"
+        ]
+      }
+    ],
+    "discovery": {
+      "maxQuestions": 6,
+      "criticalBonus": {
+        "trust": 1
+      }
+    }
+  },
+  "meters": [
+    {
+      "id": "budget",
+      "name": "Budget",
+      "icon": "money",
+      "start": 5,
+      "target": 7,
+      "priority": "high"
+    },
+    {
+      "id": "latency",
+      "name": "Speed",
+      "icon": "clock",
+      "start": 5,
+      "target": 5,
+      "priority": "medium"
+    },
+    {
+      "id": "privacy",
+      "name": "Privacy",
+      "icon": "lock",
+      "start": 5,
+      "target": 7,
+      "priority": "high"
+    },
+    {
+      "id": "fairness",
+      "name": "Fairness",
+      "icon": "scale",
+      "start": 5,
+      "target": 7,
+      "priority": "high"
+    },
+    {
+      "id": "accuracy",
+      "name": "Accuracy",
+      "icon": "target",
+      "start": 5,
+      "target": 7,
+      "priority": "high"
+    },
+    {
+      "id": "sustain",
+      "name": "Sustainability",
+      "icon": "leaf",
+      "start": 5,
+      "target": 5,
+      "priority": "medium"
+    },
+    {
+      "id": "ux",
+      "name": "Experience",
+      "icon": "heart",
+      "start": 5,
+      "target": 5,
+      "priority": "medium"
+    },
+    {
+      "id": "trust",
+      "name": "Trust",
+      "icon": "people",
+      "start": 5,
+      "target": 7,
+      "priority": "high"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "lobby",
+      "title": "Zoo Visitor Center",
+      "kind": "brief",
+      "scene": {
+        "image": "ui/scenes/lobby.svg",
+        "alt": "The zoo entrance: a wooden gate arch reading Evergreen City Zoo, with trees and rolling lawns."
+      },
+      "goal": "Meet your client.",
+      "helperText": "You're the lead AI engineer at Northbound AI Consulting. Evergreen City Zoo is a nonprofit with about 1 million visitors a year, 300 staff and 500 volunteers. Guest services answers about 2,000 repetitive calls and emails a week, and new staff struggle to find procedures spread across binders, PDFs and a shared drive. The first-year budget is $60,000. They want two assistants: a public visitor bot and an internal staff assistant. There's no single winning score: the client has priorities, and you'll only learn all of them if you ask the right questions.",
+      "tradeOffCheck": {
+        "enabled": false
+      }
+    },
+    {
+      "id": "interview",
+      "title": "Meeting Room",
+      "kind": "discovery",
+      "scene": {
+        "image": "ui/scenes/interview.svg",
+        "alt": "A meeting room with a window over the city, a whiteboard titled Kickoff · Zoo AI Assistants, and a long table."
+      },
+      "goal": "Ask up to 6 people one question each.",
+      "helperText": "In consulting, the first meeting decides what you know. You can ask 6 of these 10 people one question each, and you can't take a question back. Constraints you don't ask about still exist. You'll just meet them later. Some questions matter much more to this client than others.",
+      "reflectionPrompt": "Which question you didn't ask worries you most?",
+      "tradeOffCheck": {
+        "enabled": true,
+        "showRisks": false
+      },
+      "skills": [
+        "S1"
+      ]
+    },
+    {
+      "id": "studio",
+      "title": "Architecture Studio",
+      "kind": "decisions",
+      "scene": {
+        "image": "ui/scenes/studio.svg",
+        "alt": "A whiteboard sketch of boxes and arrows, with one dashed box still undecided."
+      },
+      "goal": "Sketch the system: structure, then models.",
+      "helperText": "Decide how the two assistants relate, then pick a model approach for each. Each assistant's model counts for half on the meters, since together they make one design. Cards show typical cost and speed. The full trade-offs appear after you lock in.",
+      "decisions": [
+        {
+          "id": "2A",
+          "prompt": "One system or two?",
+          "selection": "single"
+        },
+        {
+          "id": "2B-visitor",
+          "prompt": "Visitor bot model",
+          "selection": "single",
+          "helperText": "Public · high traffic · many languages"
+        },
+        {
+          "id": "2B-staff",
+          "prompt": "Staff assistant model",
+          "selection": "single",
+          "helperText": "~800 users · sensitive records · safety-critical"
+        }
+      ],
+      "reflectionPrompt": "Why might the two assistants need different models?",
+      "skills": [
+        "S3",
+        "S11",
+        "S5"
+      ]
+    },
+    {
+      "id": "archive",
+      "title": "Records Archive",
+      "kind": "decisions",
+      "scene": {
+        "image": "ui/scenes/archive.svg",
+        "alt": "Floor-to-ceiling shelves of colorful binders and manuals."
+      },
+      "goal": "Decide what the assistants know.",
+      "helperText": "Your team has 3 effort points this room. Doing every decision well costs 5, so you have to choose where effort matters most. The data you choose decides what each assistant can say, and what it might leak.",
+      "effortBudget": 3,
+      "decisions": [
+        {
+          "id": "3A",
+          "prompt": "Which documents?",
+          "selection": "single"
+        },
+        {
+          "id": "3B",
+          "prompt": "Old care manuals",
+          "selection": "single"
+        },
+        {
+          "id": "3C",
+          "prompt": "Who keeps it current?",
+          "selection": "single"
+        },
+        {
+          "id": "3D",
+          "prompt": "Visitor bot languages",
+          "selection": "single"
+        }
+      ],
+      "reflectionPrompt": "Where did you choose not to spend effort, and who could that affect?",
+      "skills": [
+        "S11",
+        "S5",
+        "S12"
+      ]
+    },
+    {
+      "id": "control",
+      "title": "Safety Control Room",
+      "kind": "decisions",
+      "scene": {
+        "image": "ui/scenes/control.svg",
+        "alt": "A dark control room with a row of monitor screens and a glowing shield."
+      },
+      "goal": "Set the guardrails for each assistant.",
+      "helperText": "Putting a person on every message would be safe but unaffordable. The skill here is choosing where people add the most value, and treating a public bot differently from a safety-critical staff tool.",
+      "decisions": [
+        {
+          "id": "4A",
+          "prompt": "Off-topic questions",
+          "selection": "single"
+        },
+        {
+          "id": "4B",
+          "prompt": "When unsure",
+          "selection": "single"
+        },
+        {
+          "id": "4C",
+          "prompt": "Safety-critical staff answers",
+          "selection": "single",
+          "helperText": "Feeding · medication · emergencies"
+        },
+        {
+          "id": "4D",
+          "prompt": "Member lookups",
+          "selection": "single"
+        }
+      ],
+      "reflectionPrompt": "Where does a person add the most value in your design?",
+      "skills": [
+        "S12",
+        "S5"
+      ]
+    },
+    {
+      "id": "ops",
+      "title": "Launch Operations",
+      "kind": "decisions",
+      "scene": {
+        "image": "ui/scenes/ops.svg",
+        "alt": "A launch dashboard with a go-live checklist and a rising bar chart."
+      },
+      "goal": "Choose how to launch and what to watch.",
+      "helperText": "Your launch plan changes how hard problems hit: a pilot surfaces them at smaller scale. Each monitoring tool can catch a matching kind of problem early. You can pick two.",
+      "decisions": [
+        {
+          "id": "5A",
+          "prompt": "Launch plan",
+          "selection": "single"
+        },
+        {
+          "id": "5B",
+          "prompt": "Monitoring",
+          "selection": "multi",
+          "helperText": "Pick up to 2",
+          "minPicks": 0,
+          "maxPicks": 2
+        }
+      ],
+      "reflectionPrompt": "Which risk on your blueprint are you not watching?",
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "news",
+      "title": "Six Months Later",
+      "kind": "consequences",
+      "scene": {
+        "image": "ui/scenes/news.svg",
+        "alt": "A wall of pinned newspaper clippings."
+      },
+      "goal": "The headlines are in. Respond to each one.",
+      "helperText": "Each headline traces back to decisions you made. An emergency fix recovers half the loss but costs budget. Accepting the loss saves money but leaves the damage.",
+      "tradeOffCheck": {
+        "enabled": false
+      }
+    },
+    {
+      "id": "gallery",
+      "title": "Debrief Gallery",
+      "kind": "debrief",
+      "scene": {
+        "image": "ui/scenes/gallery.svg",
+        "alt": "A gallery wall of framed pictures."
+      },
+      "goal": "See your design, reflect, and compare.",
+      "helperText": "The dashed shape shows what this client needed: 7 on its high priorities (budget, privacy, fairness, accuracy, trust) and 5 on the rest. Compare your blueprint with a sample expert design. The sample is one defensible answer, not the only one.",
+      "tradeOffCheck": {
+        "enabled": false
+      }
+    }
+  ],
+  "options": [
+    {
+      "id": "2A_shared",
+      "decision": "2A",
+      "value": "shared",
+      "label": "One shared system",
+      "icon": "layers",
+      "cost": "Lowest cost",
+      "helperText": "One knowledge base for both assistants. Simplest and cheapest to build and maintain, but every document is available to both.",
+      "effects": {
+        "budget": 2,
+        "privacy": -3,
+        "accuracy": -1
+      },
+      "skills": [
+        "S5",
+        "S3"
+      ]
+    },
+    {
+      "id": "2A_split",
+      "decision": "2A",
+      "value": "split",
+      "label": "Shared platform, separate data",
+      "icon": "split",
+      "cost": "Moderate cost",
+      "helperText": "Shared infrastructure, but role-based access decides which documents each assistant can see.",
+      "effects": {
+        "privacy": 2,
+        "accuracy": 1,
+        "trust": 1
+      },
+      "skills": [
+        "S5",
+        "S3"
+      ]
+    },
+    {
+      "id": "2A_two",
+      "decision": "2A",
+      "value": "two",
+      "label": "Two separate systems",
+      "icon": "two",
+      "cost": "Highest cost",
+      "helperText": "Independent builds, vendors and data stores. Strong separation, but double the cost and maintenance.",
+      "effects": {
+        "budget": -2,
+        "privacy": 3,
+        "accuracy": 1,
+        "trust": 1
+      },
+      "skills": [
+        "S5",
+        "S3"
+      ]
+    },
+    {
+      "id": "2B-visitor_faq",
+      "decision": "2B-visitor",
+      "value": "faq",
+      "label": "FAQ / rules bot",
+      "icon": "tree",
+      "cost": "~$100/mo",
+      "speed": "<1 sec",
+      "helperText": "A decision tree over approved answers. Cheap, fast and private, but it can't handle questions nobody wrote an answer for, or unusual phrasing.",
+      "effects": {
+        "budget": 1.5,
+        "latency": 1,
+        "accuracy": -0.5,
+        "privacy": 1,
+        "sustain": 1.5,
+        "fairness": -1,
+        "ux": -0.5
+      },
+      "skills": [
+        "S11",
+        "S3"
+      ]
+    },
+    {
+      "id": "2B-visitor_llm",
+      "decision": "2B-visitor",
+      "value": "llm",
+      "label": "General cloud LLM",
+      "icon": "cloud",
+      "cost": "~$800–2,500/mo",
+      "speed": "1–3 sec",
+      "helperText": "A hosted large model answers from general knowledge, not the zoo's documents. Fluent and multilingual, but it can invent facts, and data leaves the zoo.",
+      "effects": {
+        "budget": -1,
+        "accuracy": -1.5,
+        "privacy": -1,
+        "sustain": -1,
+        "fairness": 1,
+        "ux": 1
+      },
+      "skills": [
+        "S11",
+        "S3"
+      ]
+    },
+    {
+      "id": "2B-visitor_rag",
+      "decision": "2B-visitor",
+      "value": "rag",
+      "label": "Cloud RAG",
+      "icon": "book",
+      "cost": "~$600–1,200/mo",
+      "speed": "2–4 sec",
+      "helperText": "Retrieval-augmented generation: the model looks up the zoo's own documents and answers from them, with citations. Grounded, but runs on a paid cloud model.",
+      "effects": {
+        "budget": -0.5,
+        "latency": -0.5,
+        "accuracy": 1,
+        "privacy": -0.5,
+        "sustain": -0.5,
+        "fairness": 1,
+        "ux": 0.5
+      },
+      "skills": [
+        "S11",
+        "S3"
+      ]
+    },
+    {
+      "id": "2B-visitor_private",
+      "decision": "2B-visitor",
+      "value": "private",
+      "label": "Private RAG",
+      "icon": "server",
+      "cost": "~$15k setup + $400/mo",
+      "speed": "1–2 sec",
+      "helperText": "Same idea as RAG, using a small open model on servers the zoo controls. Data never leaves. High setup cost, low running cost.",
+      "effects": {
+        "budget": -0.5,
+        "latency": 0.5,
+        "accuracy": 0.5,
+        "privacy": 1.5,
+        "sustain": 0.5,
+        "fairness": 0.5,
+        "ux": 0.5
+      },
+      "skills": [
+        "S11",
+        "S3"
+      ]
+    },
+    {
+      "id": "2B-visitor_hybrid",
+      "decision": "2B-visitor",
+      "value": "hybrid",
+      "label": "Hybrid FAQ + RAG",
+      "icon": "bolt",
+      "cost": "~$500/mo",
+      "speed": "<1 sec / 2–4 sec",
+      "helperText": "Instant canned answers for the top 50 questions; RAG handles everything else. Absorbs traffic spikes cheaply.",
+      "effects": {
+        "latency": 0.5,
+        "accuracy": 1,
+        "sustain": 1,
+        "fairness": 1,
+        "ux": 0.5
+      },
+      "skills": [
+        "S11",
+        "S3"
+      ]
+    },
+    {
+      "id": "2B-staff_faq",
+      "decision": "2B-staff",
+      "value": "faq",
+      "label": "FAQ / rules bot",
+      "icon": "tree",
+      "cost": "~$100/mo",
+      "speed": "<1 sec",
+      "helperText": "A decision tree over approved answers. Cheap, fast and private, but it can't handle questions nobody wrote an answer for, or unusual phrasing.",
+      "effects": {
+        "budget": 1.5,
+        "latency": 1,
+        "accuracy": -0.5,
+        "privacy": 1,
+        "sustain": 1.5,
+        "fairness": -1,
+        "ux": -0.5
+      },
+      "skills": [
+        "S11",
+        "S5"
+      ]
+    },
+    {
+      "id": "2B-staff_llm",
+      "decision": "2B-staff",
+      "value": "llm",
+      "label": "General cloud LLM",
+      "icon": "cloud",
+      "cost": "~$800–2,500/mo",
+      "speed": "1–3 sec",
+      "helperText": "A hosted large model answers from general knowledge, not the zoo's documents. Fluent and multilingual, but it can invent facts, and data leaves the zoo.",
+      "effects": {
+        "budget": -1,
+        "accuracy": -1.5,
+        "privacy": -1,
+        "sustain": -1,
+        "fairness": 1,
+        "ux": 1
+      },
+      "skills": [
+        "S11",
+        "S5"
+      ]
+    },
+    {
+      "id": "2B-staff_rag",
+      "decision": "2B-staff",
+      "value": "rag",
+      "label": "Cloud RAG",
+      "icon": "book",
+      "cost": "~$600–1,200/mo",
+      "speed": "2–4 sec",
+      "helperText": "Retrieval-augmented generation: the model looks up the zoo's own documents and answers from them, with citations. Grounded, but runs on a paid cloud model.",
+      "effects": {
+        "budget": -0.5,
+        "latency": -0.5,
+        "accuracy": 1,
+        "privacy": -0.5,
+        "sustain": -0.5,
+        "fairness": 1,
+        "ux": 0.5
+      },
+      "skills": [
+        "S11",
+        "S5"
+      ]
+    },
+    {
+      "id": "2B-staff_private",
+      "decision": "2B-staff",
+      "value": "private",
+      "label": "Private RAG",
+      "icon": "server",
+      "cost": "~$15k setup + $400/mo",
+      "speed": "1–2 sec",
+      "helperText": "Same idea as RAG, using a small open model on servers the zoo controls. Data never leaves. High setup cost, low running cost.",
+      "effects": {
+        "budget": -0.5,
+        "latency": 0.5,
+        "accuracy": 0.5,
+        "privacy": 1.5,
+        "sustain": 0.5,
+        "fairness": 0.5,
+        "ux": 0.5
+      },
+      "skills": [
+        "S11",
+        "S5"
+      ]
+    },
+    {
+      "id": "2B-staff_hybrid",
+      "decision": "2B-staff",
+      "value": "hybrid",
+      "label": "Hybrid FAQ + RAG",
+      "icon": "bolt",
+      "cost": "~$500/mo",
+      "speed": "<1 sec / 2–4 sec",
+      "helperText": "Instant canned answers for the top 50 questions; RAG handles everything else. Absorbs traffic spikes cheaply.",
+      "effects": {
+        "latency": 0.5,
+        "accuracy": 1,
+        "sustain": 1,
+        "fairness": 1,
+        "ux": 0.5
+      },
+      "skills": [
+        "S11",
+        "S5"
+      ]
+    },
+    {
+      "id": "3A_everything",
+      "decision": "3A",
+      "value": "everything",
+      "label": "Everything on the drive",
+      "icon": "files",
+      "helperText": "Load the whole shared drive. Fast and nothing is missed, including whatever else lives there.",
+      "effects": {
+        "accuracy": 1,
+        "privacy": -3
+      },
+      "effort": 0,
+      "skills": [
+        "S5",
+        "S11"
+      ]
+    },
+    {
+      "id": "3A_curated",
+      "decision": "3A",
+      "value": "curated",
+      "label": "Curated + tagged sets",
+      "icon": "filter",
+      "helperText": "A reviewed public set for visitors and a tagged internal set for staff.",
+      "effects": {
+        "privacy": 2,
+        "accuracy": 1
+      },
+      "effort": 1,
+      "skills": [
+        "S5",
+        "S11"
+      ]
+    },
+    {
+      "id": "3B_asis",
+      "decision": "3B",
+      "value": "asis",
+      "label": "Use scans as-is",
+      "icon": "scan",
+      "helperText": "Use the scanned PDFs as they are. No extra work, but many are 3+ years old.",
+      "effects": {
+        "accuracy": -2
+      },
+      "effort": 0,
+      "skills": [
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "3B_digitize",
+      "decision": "3B",
+      "value": "digitize",
+      "label": "Digitize + vet review",
+      "icon": "check",
+      "helperText": "Digitize the manuals and have the vet team review the top 40 procedures.",
+      "effects": {
+        "accuracy": 3,
+        "trust": 2,
+        "budget": -1
+      },
+      "effort": 2,
+      "skills": [
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "3B_exclude",
+      "decision": "3B",
+      "value": "exclude",
+      "label": "Leave them out",
+      "icon": "binder",
+      "helperText": "Exclude the manuals. The assistant tells staff to check the binder.",
+      "effects": {
+        "trust": -1,
+        "ux": -1
+      },
+      "effort": 0,
+      "skills": [
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "3C_none",
+      "decision": "3C",
+      "value": "none",
+      "label": "No owner",
+      "icon": "x",
+      "helperText": "Update information when someone notices. No ongoing cost.",
+      "effects": {},
+      "effort": 0,
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "3C_owner",
+      "decision": "3C",
+      "value": "owner",
+      "label": "Owner + monthly review",
+      "icon": "calendar",
+      "helperText": "Assign a content owner who reviews hours, prices and events monthly.",
+      "effects": {
+        "trust": 1,
+        "budget": -1
+      },
+      "effort": 1,
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "3D_english",
+      "decision": "3D",
+      "value": "english",
+      "label": "English only",
+      "icon": "chat",
+      "helperText": "Launch in English. Simplest.",
+      "effects": {
+        "fairness": -2
+      },
+      "effort": 0,
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "3D_translate",
+      "decision": "3D",
+      "value": "translate",
+      "label": "3 more languages",
+      "icon": "globe",
+      "helperText": "Translate the top FAQs into Spanish, Mandarin and Vietnamese, with an LLM fallback for the rest.",
+      "effects": {
+        "fairness": 3,
+        "ux": 1,
+        "budget": -1
+      },
+      "effort": 1,
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "4A_all",
+      "decision": "4A",
+      "value": "all",
+      "label": "Answer anything",
+      "icon": "chat",
+      "helperText": "The visitor bot answers any question on any topic. Feels open and friendly.",
+      "effects": {
+        "ux": 1,
+        "trust": -2
+      },
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "4A_topic",
+      "decision": "4A",
+      "value": "topic",
+      "label": "Zoo topics only",
+      "icon": "filter",
+      "helperText": "Stay on zoo topics and politely decline the rest. Predictable and on-brand.",
+      "effects": {
+        "accuracy": 2,
+        "trust": 1
+      },
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "4B_guess",
+      "decision": "4B",
+      "value": "guess",
+      "label": "Best guess",
+      "icon": "question",
+      "helperText": "The visitor bot always gives an answer, even when it isn't confident.",
+      "effects": {
+        "ux": 1,
+        "accuracy": -2
+      },
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "4B_handoff",
+      "decision": "4B",
+      "value": "handoff",
+      "label": "Hand off to a person",
+      "icon": "hand",
+      "helperText": "Say \"I'm not sure\" and link to a person on chat or phone. Costs some staff time.",
+      "effects": {
+        "accuracy": 2,
+        "trust": 2,
+        "budget": -1
+      },
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "4C_direct",
+      "decision": "4C",
+      "value": "direct",
+      "label": "Answer directly",
+      "icon": "bolt",
+      "helperText": "Fastest for busy keepers. No source shown.",
+      "effects": {
+        "latency": 1,
+        "accuracy": -3
+      },
+      "skills": [
+        "S12",
+        "S11"
+      ]
+    },
+    {
+      "id": "4C_cite",
+      "decision": "4C",
+      "value": "cite",
+      "label": "Always cite",
+      "icon": "cite",
+      "helperText": "Every answer links to the source procedure, so staff can check it.",
+      "effects": {
+        "accuracy": 2,
+        "trust": 2
+      },
+      "skills": [
+        "S12",
+        "S11"
+      ]
+    },
+    {
+      "id": "4C_supervisor",
+      "decision": "4C",
+      "value": "supervisor",
+      "label": "Cite + supervisor",
+      "icon": "shield",
+      "helperText": "Cite the source, and a supervisor confirms medication and emergency answers. Slower, but a person checks the riskiest answers.",
+      "effects": {
+        "accuracy": 3,
+        "trust": 3,
+        "latency": -1
+      },
+      "skills": [
+        "S12",
+        "S11"
+      ]
+    },
+    {
+      "id": "4D_name",
+      "decision": "4D",
+      "value": "name",
+      "label": "Look up by name",
+      "icon": "user",
+      "helperText": "Visitors can ask about a membership by giving a name. Convenient.",
+      "effects": {
+        "ux": 2,
+        "privacy": -3
+      },
+      "skills": [
+        "S5"
+      ]
+    },
+    {
+      "id": "4D_login",
+      "decision": "4D",
+      "value": "login",
+      "label": "Require login",
+      "icon": "lock",
+      "helperText": "Members log in first; the bot never sees payment data. One more step.",
+      "effects": {
+        "privacy": 2,
+        "ux": -1
+      },
+      "skills": [
+        "S5"
+      ]
+    },
+    {
+      "id": "5A_all",
+      "decision": "5A",
+      "value": "all",
+      "label": "Launch to everyone",
+      "icon": "rocket",
+      "helperText": "Both assistants go live for everyone at once. Fastest impact.",
+      "effects": {
+        "ux": 1,
+        "trust": -1
+      },
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "5A_pilot",
+      "decision": "5A",
+      "value": "pilot",
+      "label": "Pilot first",
+      "icon": "flask",
+      "helperText": "Staff assistant with 20 keepers first; visitor bot during the off-season.",
+      "effects": {
+        "trust": 2,
+        "budget": -1
+      },
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "5B_review",
+      "decision": "5B",
+      "value": "review",
+      "label": "Answer reviews",
+      "icon": "eye",
+      "helperText": "Staff read 50 sampled answers each week, looking for errors and leaks.",
+      "effects": {},
+      "skills": [
+        "S4",
+        "S10"
+      ]
+    },
+    {
+      "id": "5B_feedback",
+      "decision": "5B",
+      "value": "feedback",
+      "label": "Thumbs-down button",
+      "icon": "thumb",
+      "helperText": "Users flag bad answers on the spot.",
+      "effects": {},
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "5B_cost",
+      "decision": "5B",
+      "value": "cost",
+      "label": "Cost dashboard",
+      "icon": "chart",
+      "helperText": "Usage and spend tracked against the budget cap.",
+      "effects": {},
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "5B_language",
+      "decision": "5B",
+      "value": "language",
+      "label": "Accuracy by language",
+      "icon": "globe",
+      "helperText": "Shows whether some visitors get worse answers than others.",
+      "effects": {},
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "5B_carbon",
+      "decision": "5B",
+      "value": "carbon",
+      "label": "Carbon reporting",
+      "icon": "leaf",
+      "helperText": "Energy use feeds the board's sustainability report.",
+      "effects": {},
+      "skills": [
+        "S4"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "E1",
+      "title": "Security schedule leak",
+      "headline": "Zoo chatbot reveals night security schedule",
+      "story": "A visitor asked when keepers leave at night. The bot answered with the security team's schedule. The project is paused for review.",
+      "trigger": {
+        "any": [
+          {
+            "all": [
+              {
+                "choice": "2A",
+                "is": "shared"
+              },
+              {
+                "not": {
+                  "choice": "3A",
+                  "is": "curated"
+                }
+              }
+            ]
+          },
+          {
+            "choice": "3A",
+            "is": "everything"
+          },
+          {
+            "choice": "4D",
+            "is": "name"
+          }
+        ]
+      },
+      "damage": {
+        "privacy": -4,
+        "trust": -4
+      },
+      "mitigation": {
+        "pilotMultiplier": 0.5,
+        "monitoringMultiplier": 0.5
+      },
+      "monitoringOption": "5B_review",
+      "fix": {
+        "label": "Emergency fix",
+        "description": "Recovers half of the loss. Costs 1 budget.",
+        "cost": {
+          "budget": -1
+        }
+      },
+      "skills": [
+        "S5"
+      ]
+    },
+    {
+      "id": "E2",
+      "title": "Invented free admission day",
+      "headline": "\"Free admission Tuesdays\"? Zoo says no such thing",
+      "story": "The bot invented a free-entry day. A screenshot spread and the front gate was overwhelmed.",
+      "trigger": {
+        "any": [
+          {
+            "choice": "2B-visitor",
+            "is": "llm"
+          },
+          {
+            "choice": "4B",
+            "is": "guess"
+          },
+          {
+            "choice": "4A",
+            "is": "all"
+          }
+        ]
+      },
+      "damage": {
+        "trust": -3,
+        "accuracy": -2
+      },
+      "mitigation": {
+        "pilotMultiplier": 0.5,
+        "monitoringMultiplier": 0.5
+      },
+      "monitoringOption": "5B_feedback",
+      "fix": {
+        "label": "Emergency fix",
+        "description": "Recovers half of the loss. Costs 1 budget.",
+        "cost": {
+          "budget": -1
+        }
+      },
+      "skills": [
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "E3",
+      "title": "Outdated feeding protocol",
+      "headline": "Vet team stops using staff AI after feeding mix-up",
+      "story": "A new keeper followed a three-year-old feeding protocol. The animal is fine, but trust is gone.",
+      "trigger": {
+        "any": [
+          {
+            "choice": "3B",
+            "is": "asis"
+          },
+          {
+            "choice": "4C",
+            "is": "direct"
+          }
+        ]
+      },
+      "damage": {
+        "accuracy": -4,
+        "trust": -3
+      },
+      "mitigation": {
+        "pilotMultiplier": 0.5,
+        "monitoringMultiplier": 0.5
+      },
+      "monitoringOption": "5B_review",
+      "fix": {
+        "label": "Emergency fix",
+        "description": "Recovers half of the loss. Costs 1 budget.",
+        "cost": {
+          "budget": -1
+        }
+      },
+      "skills": [
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "E4",
+      "title": "Family left without help",
+      "headline": "Family says zoo chatbot left them without help",
+      "story": "A Spanish-speaking family couldn't get answers about accessible routes.",
+      "trigger": {
+        "any": [
+          {
+            "choice": "3D",
+            "is": "english"
+          },
+          {
+            "choice": "2B-visitor",
+            "is": "faq"
+          }
+        ]
+      },
+      "damage": {
+        "fairness": -3,
+        "trust": -2
+      },
+      "mitigation": {
+        "pilotMultiplier": 0.5,
+        "monitoringMultiplier": 0.5
+      },
+      "monitoringOption": "5B_language",
+      "fix": {
+        "label": "Emergency fix",
+        "description": "Recovers half of the loss. Costs 1 budget.",
+        "cost": {
+          "budget": -1
+        }
+      },
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "E5",
+      "title": "Wrong holiday hours",
+      "headline": "Visitors arrive at closed gates on holiday",
+      "story": "Holiday hours changed but the bot still gave the old ones.",
+      "trigger": {
+        "choice": "3C",
+        "is": "none"
+      },
+      "damage": {
+        "accuracy": -2,
+        "trust": -2
+      },
+      "mitigation": {
+        "pilotMultiplier": 0.5,
+        "monitoringMultiplier": 0.5
+      },
+      "monitoringOption": "5B_review",
+      "fix": {
+        "label": "Emergency fix",
+        "description": "Recovers half of the loss. Costs 1 budget.",
+        "cost": {
+          "budget": -1
+        }
+      },
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "E6",
+      "title": "Summer bill triples",
+      "headline": "Summer chatbot bill triples; board asks about carbon",
+      "story": "Weekend traffic sent every message to a paid cloud model.",
+      "trigger": {
+        "choice": "2B-visitor",
+        "isAnyOf": [
+          "llm",
+          "rag"
+        ]
+      },
+      "damage": {
+        "budget": -3,
+        "sustain": -2
+      },
+      "mitigation": {
+        "pilotMultiplier": 0.5,
+        "monitoringMultiplier": 0.5
+      },
+      "monitoringOption": "5B_cost",
+      "fix": {
+        "label": "Emergency fix",
+        "description": "Recovers half of the loss. Costs 1 budget.",
+        "cost": {
+          "budget": -1
+        }
+      },
+      "skills": [
+        "S2",
+        "S4"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "id": "risk_shared_kb",
+      "text": "Both assistants read from one knowledge base. What stops the public bot from seeing internal files?",
+      "trigger": {
+        "all": [
+          {
+            "choice": "2A",
+            "is": "shared"
+          },
+          {
+            "not": {
+              "choice": "3A",
+              "is": "curated"
+            }
+          }
+        ]
+      },
+      "blueprintPart": "part_kb_shared",
+      "room": "studio",
+      "relatedEvent": "E1",
+      "skills": [
+        "S5"
+      ]
+    },
+    {
+      "id": "risk_everything_on_drive",
+      "text": "Security schedules and HR files are now in the knowledge base.",
+      "trigger": {
+        "choice": "3A",
+        "is": "everything"
+      },
+      "blueprintPart": "part_docs",
+      "room": "archive",
+      "relatedEvent": "E1",
+      "skills": [
+        "S5"
+      ]
+    },
+    {
+      "id": "risk_member_by_name",
+      "text": "Anyone who knows a member's name can ask about their account.",
+      "trigger": {
+        "choice": "4D",
+        "is": "name"
+      },
+      "blueprintPart": "part_vguard_member",
+      "room": "control",
+      "relatedEvent": "E1",
+      "skills": [
+        "S5"
+      ]
+    },
+    {
+      "id": "risk_ungrounded_llm",
+      "text": "The visitor bot answers from general knowledge, not the zoo's documents. It may invent things.",
+      "trigger": {
+        "choice": "2B-visitor",
+        "is": "llm"
+      },
+      "blueprintPart": "part_vbot",
+      "room": "studio",
+      "relatedEvent": "E2",
+      "skills": [
+        "S11"
+      ]
+    },
+    {
+      "id": "risk_bot_guesses",
+      "text": "The visitor bot guesses when it isn't sure.",
+      "trigger": {
+        "choice": "4B",
+        "is": "guess"
+      },
+      "blueprintPart": "part_vguard_unsure",
+      "room": "control",
+      "relatedEvent": "E2",
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "risk_answers_anything",
+      "text": "The visitor bot will answer anything, on any topic.",
+      "trigger": {
+        "choice": "4A",
+        "is": "all"
+      },
+      "blueprintPart": "part_vguard_topic",
+      "room": "control",
+      "relatedEvent": "E2",
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "risk_old_manuals",
+      "text": "Staff answers come from old scanned manuals.",
+      "trigger": {
+        "choice": "3B",
+        "is": "asis"
+      },
+      "blueprintPart": "part_manuals",
+      "room": "archive",
+      "relatedEvent": "E3",
+      "skills": [
+        "S11"
+      ]
+    },
+    {
+      "id": "risk_no_source_safety",
+      "text": "Safety-critical answers have no source staff can check.",
+      "trigger": {
+        "choice": "4C",
+        "is": "direct"
+      },
+      "blueprintPart": "part_sguard",
+      "room": "control",
+      "relatedEvent": "E3",
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "risk_english_only",
+      "text": "Visitors who don't read English get no help.",
+      "trigger": {
+        "choice": "3D",
+        "is": "english"
+      },
+      "blueprintPart": "part_vlang",
+      "room": "archive",
+      "relatedEvent": "E4",
+      "skills": [
+        "S12"
+      ]
+    },
+    {
+      "id": "risk_rules_bot_phrasing",
+      "text": "The rules bot only understands questions phrased the way it expects.",
+      "trigger": {
+        "choice": "2B-visitor",
+        "is": "faq"
+      },
+      "blueprintPart": "part_vbot",
+      "room": "studio",
+      "relatedEvent": "E4",
+      "skills": [
+        "S11"
+      ]
+    },
+    {
+      "id": "risk_no_content_owner",
+      "text": "No one is responsible for keeping hours and events current.",
+      "trigger": {
+        "choice": "3C",
+        "is": "none"
+      },
+      "blueprintPart": "part_owner",
+      "room": "archive",
+      "relatedEvent": "E5",
+      "skills": [
+        "S4"
+      ]
+    },
+    {
+      "id": "risk_cloud_every_message",
+      "text": "Every visitor message, including summer peaks, goes to a paid cloud model.",
+      "trigger": {
+        "choice": "2B-visitor",
+        "isAnyOf": [
+          "llm",
+          "rag"
+        ]
+      },
+      "blueprintPart": "part_vbot",
+      "room": "studio",
+      "relatedEvent": "E6",
+      "skills": [
+        "S2"
+      ]
+    }
+  ],
+  "blueprint": {
+    "layers": [
+      {
+        "id": "layer_users",
+        "label": "Users"
+      },
+      {
+        "id": "layer_guardrails",
+        "label": "Guardrails"
+      },
+      {
+        "id": "layer_assistants",
+        "label": "Assistants"
+      },
+      {
+        "id": "layer_knowledge",
+        "label": "Knowledge"
+      },
+      {
+        "id": "layer_operations",
+        "label": "Operations"
+      }
+    ],
+    "parts": [
+      {
+        "id": "part_visitors",
+        "label": "Visitors",
+        "kind": "client",
+        "layer": "layer_users",
+        "position": {
+          "col": 0,
+          "row": 0
+        },
+        "initial": "solid",
+        "icon": "people"
+      },
+      {
+        "id": "part_staff",
+        "label": "Staff",
+        "kind": "client",
+        "layer": "layer_users",
+        "position": {
+          "col": 0,
+          "row": 1
+        },
+        "initial": "solid",
+        "icon": "user"
+      },
+      {
+        "id": "part_vguard_member",
+        "label": "Member lookups?",
+        "kind": "guardrail",
+        "layer": "layer_guardrails",
+        "position": {
+          "col": 0,
+          "row": 0
+        },
+        "initial": "dashed",
+        "icon": "lock",
+        "fills": [
+          {
+            "when": {
+              "choice": "4D",
+              "is": "login"
+            },
+            "label": "Login for members"
+          },
+          {
+            "when": {
+              "choice": "4D",
+              "is": "name"
+            },
+            "label": "Lookup by name"
+          }
+        ]
+      },
+      {
+        "id": "part_vguard_topic",
+        "label": "Topic rule?",
+        "kind": "guardrail",
+        "layer": "layer_guardrails",
+        "position": {
+          "col": 1,
+          "row": 0
+        },
+        "initial": "dashed",
+        "icon": "filter",
+        "fills": [
+          {
+            "when": {
+              "choice": "4A",
+              "is": "topic"
+            },
+            "label": "Zoo topics only"
+          },
+          {
+            "when": {
+              "choice": "4A",
+              "is": "all"
+            },
+            "label": "Answers anything"
+          }
+        ]
+      },
+      {
+        "id": "part_vguard_unsure",
+        "label": "When unsure?",
+        "kind": "guardrail",
+        "layer": "layer_guardrails",
+        "position": {
+          "col": 2,
+          "row": 0
+        },
+        "initial": "dashed",
+        "icon": "question",
+        "fills": [
+          {
+            "when": {
+              "choice": "4B",
+              "is": "handoff"
+            },
+            "label": "Hands off when unsure"
+          },
+          {
+            "when": {
+              "choice": "4B",
+              "is": "guess"
+            },
+            "label": "Guesses when unsure"
+          }
+        ]
+      },
+      {
+        "id": "part_sguard",
+        "label": "Safety checks?",
+        "kind": "guardrail",
+        "layer": "layer_guardrails",
+        "position": {
+          "col": 0,
+          "row": 1
+        },
+        "initial": "dashed",
+        "icon": "shield",
+        "fills": [
+          {
+            "when": {
+              "choice": "4C",
+              "is": "direct"
+            },
+            "label": "Answers directly"
+          },
+          {
+            "when": {
+              "choice": "4C",
+              "is": "cite"
+            },
+            "label": "Cites sources"
+          },
+          {
+            "when": {
+              "choice": "4C",
+              "is": "supervisor"
+            },
+            "label": "Cites sources + supervisor check"
+          }
+        ]
+      },
+      {
+        "id": "part_vbot",
+        "label": "Visitor bot model?",
+        "kind": "model",
+        "layer": "layer_assistants",
+        "position": {
+          "col": 0,
+          "row": 0
+        },
+        "initial": "dashed",
+        "icon": "chat",
+        "fills": [
+          {
+            "when": {
+              "choice": "2B-visitor",
+              "is": "faq"
+            },
+            "label": "FAQ / rules bot"
+          },
+          {
+            "when": {
+              "choice": "2B-visitor",
+              "is": "llm"
+            },
+            "label": "General cloud LLM"
+          },
+          {
+            "when": {
+              "choice": "2B-visitor",
+              "is": "rag"
+            },
+            "label": "Cloud RAG"
+          },
+          {
+            "when": {
+              "choice": "2B-visitor",
+              "is": "private"
+            },
+            "label": "Private RAG"
+          },
+          {
+            "when": {
+              "choice": "2B-visitor",
+              "is": "hybrid"
+            },
+            "label": "Hybrid FAQ + RAG"
+          }
+        ]
+      },
+      {
+        "id": "part_vlang",
+        "label": "Languages?",
+        "kind": "service",
+        "layer": "layer_assistants",
+        "position": {
+          "col": 1,
+          "row": 0
+        },
+        "initial": "dashed",
+        "icon": "globe",
+        "fills": [
+          {
+            "when": {
+              "choice": "3D",
+              "is": "english"
+            },
+            "label": "English only"
+          },
+          {
+            "when": {
+              "choice": "3D",
+              "is": "translate"
+            },
+            "label": "4 languages"
+          }
+        ]
+      },
+      {
+        "id": "part_handoff",
+        "label": "Guest services team",
+        "kind": "human",
+        "layer": "layer_assistants",
+        "position": {
+          "col": 2,
+          "row": 0
+        },
+        "initial": "hidden",
+        "icon": "hand",
+        "fills": [
+          {
+            "when": {
+              "choice": "4B",
+              "is": "handoff"
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_sbot",
+        "label": "Staff assistant model?",
+        "kind": "model",
+        "layer": "layer_assistants",
+        "position": {
+          "col": 0,
+          "row": 1
+        },
+        "initial": "dashed",
+        "icon": "people",
+        "fills": [
+          {
+            "when": {
+              "choice": "2B-staff",
+              "is": "faq"
+            },
+            "label": "FAQ / rules bot"
+          },
+          {
+            "when": {
+              "choice": "2B-staff",
+              "is": "llm"
+            },
+            "label": "General cloud LLM"
+          },
+          {
+            "when": {
+              "choice": "2B-staff",
+              "is": "rag"
+            },
+            "label": "Cloud RAG"
+          },
+          {
+            "when": {
+              "choice": "2B-staff",
+              "is": "private"
+            },
+            "label": "Private RAG"
+          },
+          {
+            "when": {
+              "choice": "2B-staff",
+              "is": "hybrid"
+            },
+            "label": "Hybrid FAQ + RAG"
+          }
+        ]
+      },
+      {
+        "id": "part_supervisor",
+        "label": "Supervisor",
+        "kind": "human",
+        "layer": "layer_assistants",
+        "position": {
+          "col": 1,
+          "row": 1
+        },
+        "initial": "hidden",
+        "icon": "shield",
+        "fills": [
+          {
+            "when": {
+              "choice": "4C",
+              "is": "supervisor"
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_kb_pending",
+        "label": "Knowledge: structure not decided",
+        "kind": "vector-store",
+        "layer": "layer_knowledge",
+        "position": {
+          "col": 0,
+          "row": 0
+        },
+        "initial": "dashed",
+        "fills": [
+          {
+            "when": {
+              "choice": "2A",
+              "answered": true
+            },
+            "visible": false
+          }
+        ]
+      },
+      {
+        "id": "part_kb_shared",
+        "label": "Shared knowledge base · HR and security files on the same drive",
+        "kind": "vector-store",
+        "layer": "layer_knowledge",
+        "position": {
+          "col": 0,
+          "row": 0
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "choice": "2A",
+              "is": "shared"
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_kb_visitor",
+        "label": "Visitor knowledge",
+        "kind": "vector-store",
+        "layer": "layer_knowledge",
+        "position": {
+          "col": 0,
+          "row": 0
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "choice": "2A",
+              "is": "split"
+            },
+            "label": "Visitor knowledge"
+          },
+          {
+            "when": {
+              "choice": "2A",
+              "is": "two"
+            },
+            "label": "System A · Visitor knowledge"
+          }
+        ]
+      },
+      {
+        "id": "part_kb_staff",
+        "label": "Staff knowledge",
+        "kind": "vector-store",
+        "layer": "layer_knowledge",
+        "position": {
+          "col": 0,
+          "row": 1
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "choice": "2A",
+              "is": "split"
+            },
+            "label": "Staff knowledge"
+          },
+          {
+            "when": {
+              "choice": "2A",
+              "is": "two"
+            },
+            "label": "System B · Staff knowledge"
+          }
+        ]
+      },
+      {
+        "id": "part_docs",
+        "label": "Documents?",
+        "kind": "storage",
+        "layer": "layer_knowledge",
+        "position": {
+          "col": 1,
+          "row": 0
+        },
+        "initial": "dashed",
+        "fills": [
+          {
+            "when": {
+              "choice": "3A",
+              "is": "curated"
+            },
+            "label": "Curated public FAQs"
+          },
+          {
+            "when": {
+              "choice": "3A",
+              "is": "everything"
+            },
+            "label": "All shared-drive files"
+          }
+        ]
+      },
+      {
+        "id": "part_manuals",
+        "label": "Manuals?",
+        "kind": "storage",
+        "layer": "layer_knowledge",
+        "position": {
+          "col": 1,
+          "row": 1
+        },
+        "initial": "dashed",
+        "fills": [
+          {
+            "when": {
+              "choice": "3B",
+              "is": "asis"
+            },
+            "label": "Old scanned manuals"
+          },
+          {
+            "when": {
+              "choice": "3B",
+              "is": "digitize"
+            },
+            "label": "Vet-reviewed manuals"
+          },
+          {
+            "when": {
+              "choice": "3B",
+              "is": "exclude"
+            },
+            "label": "Manuals excluded"
+          }
+        ]
+      },
+      {
+        "id": "part_owner",
+        "label": "Content owner?",
+        "kind": "human",
+        "layer": "layer_knowledge",
+        "position": {
+          "col": 2,
+          "row": 0
+        },
+        "initial": "dashed",
+        "fills": [
+          {
+            "when": {
+              "choice": "3C",
+              "is": "owner"
+            },
+            "label": "Owner · monthly review"
+          },
+          {
+            "when": {
+              "choice": "3C",
+              "is": "none"
+            },
+            "label": "No content owner"
+          }
+        ]
+      },
+      {
+        "id": "part_launch",
+        "label": "Launch plan?",
+        "kind": "service",
+        "layer": "layer_operations",
+        "position": {
+          "col": 0,
+          "row": 0
+        },
+        "initial": "dashed",
+        "icon": "rocket",
+        "fills": [
+          {
+            "when": {
+              "choice": "5A",
+              "is": "pilot"
+            },
+            "label": "Pilot launch"
+          },
+          {
+            "when": {
+              "choice": "5A",
+              "is": "all"
+            },
+            "label": "Full launch"
+          }
+        ]
+      },
+      {
+        "id": "part_mon_review",
+        "label": "Answer reviews",
+        "kind": "monitor",
+        "layer": "layer_operations",
+        "position": {
+          "col": 1,
+          "row": 0
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "choice": "5B",
+              "includes": "review"
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_mon_feedback",
+        "label": "Thumbs-down button",
+        "kind": "monitor",
+        "layer": "layer_operations",
+        "position": {
+          "col": 2,
+          "row": 0
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "choice": "5B",
+              "includes": "feedback"
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_mon_cost",
+        "label": "Cost dashboard",
+        "kind": "monitor",
+        "layer": "layer_operations",
+        "position": {
+          "col": 3,
+          "row": 0
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "choice": "5B",
+              "includes": "cost"
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_mon_language",
+        "label": "Accuracy by language",
+        "kind": "monitor",
+        "layer": "layer_operations",
+        "position": {
+          "col": 4,
+          "row": 0
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "choice": "5B",
+              "includes": "language"
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_mon_carbon",
+        "label": "Carbon reporting",
+        "kind": "monitor",
+        "layer": "layer_operations",
+        "position": {
+          "col": 5,
+          "row": 0
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "choice": "5B",
+              "includes": "carbon"
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_mon_none",
+        "label": "No monitoring",
+        "kind": "monitor",
+        "layer": "layer_operations",
+        "position": {
+          "col": 1,
+          "row": 0
+        },
+        "initial": "hidden",
+        "fills": [
+          {
+            "when": {
+              "all": [
+                {
+                  "choice": "5A",
+                  "answered": true
+                },
+                {
+                  "not": {
+                    "any": [
+                      {
+                        "choice": "5B",
+                        "includes": "review"
+                      },
+                      {
+                        "choice": "5B",
+                        "includes": "feedback"
+                      },
+                      {
+                        "choice": "5B",
+                        "includes": "cost"
+                      },
+                      {
+                        "choice": "5B",
+                        "includes": "language"
+                      },
+                      {
+                        "choice": "5B",
+                        "includes": "carbon"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "connections": [
+      {
+        "from": "part_visitors",
+        "to": "part_vguard_member"
+      },
+      {
+        "from": "part_vguard_member",
+        "to": "part_vguard_topic"
+      },
+      {
+        "from": "part_vguard_topic",
+        "to": "part_vbot"
+      },
+      {
+        "from": "part_vlang",
+        "to": "part_vbot"
+      },
+      {
+        "from": "part_vbot",
+        "to": "part_vguard_unsure"
+      },
+      {
+        "from": "part_vguard_unsure",
+        "to": "part_handoff",
+        "when": {
+          "choice": "4B",
+          "is": "handoff"
+        }
+      },
+      {
+        "from": "part_vbot",
+        "to": "part_kb_shared",
+        "when": {
+          "choice": "2A",
+          "is": "shared"
+        }
+      },
+      {
+        "from": "part_vbot",
+        "to": "part_kb_visitor",
+        "when": {
+          "choice": "2A",
+          "isAnyOf": [
+            "split",
+            "two"
+          ]
+        }
+      },
+      {
+        "from": "part_staff",
+        "to": "part_sguard"
+      },
+      {
+        "from": "part_sguard",
+        "to": "part_sbot"
+      },
+      {
+        "from": "part_sbot",
+        "to": "part_supervisor",
+        "when": {
+          "choice": "4C",
+          "is": "supervisor"
+        }
+      },
+      {
+        "from": "part_sbot",
+        "to": "part_kb_shared",
+        "when": {
+          "choice": "2A",
+          "is": "shared"
+        }
+      },
+      {
+        "from": "part_sbot",
+        "to": "part_kb_staff",
+        "when": {
+          "choice": "2A",
+          "isAnyOf": [
+            "split",
+            "two"
+          ]
+        }
+      },
+      {
+        "from": "part_docs",
+        "to": "part_kb_shared",
+        "when": {
+          "choice": "2A",
+          "is": "shared"
+        }
+      },
+      {
+        "from": "part_docs",
+        "to": "part_kb_visitor",
+        "when": {
+          "choice": "2A",
+          "isAnyOf": [
+            "split",
+            "two"
+          ]
+        }
+      },
+      {
+        "from": "part_manuals",
+        "to": "part_kb_shared",
+        "when": {
+          "choice": "2A",
+          "is": "shared"
+        }
+      },
+      {
+        "from": "part_manuals",
+        "to": "part_kb_staff",
+        "when": {
+          "choice": "2A",
+          "isAnyOf": [
+            "split",
+            "two"
+          ]
+        }
+      },
+      {
+        "from": "part_owner",
+        "to": "part_kb_shared",
+        "when": {
+          "choice": "2A",
+          "is": "shared"
+        }
+      },
+      {
+        "from": "part_owner",
+        "to": "part_kb_visitor",
+        "when": {
+          "choice": "2A",
+          "isAnyOf": [
+            "split",
+            "two"
+          ]
+        }
+      }
+    ]
+  },
+  "debrief": {
+    "reflectionPrompts": [
+      {
+        "id": "refl_1",
+        "text": "Did you design the visitor bot and the staff assistant the same way or differently? Why?",
+        "skills": [
+          "S3",
+          "S11"
+        ]
+      },
+      {
+        "id": "refl_2",
+        "text": "Which constraint did you prioritize most, and what did that cost you?",
+        "skills": [
+          "S3"
+        ]
+      },
+      {
+        "id": "refl_3",
+        "text": "Which consequence surprised you? What earlier decision caused it?",
+        "skills": [
+          "S3",
+          "S4"
+        ]
+      },
+      {
+        "id": "refl_4",
+        "text": "If you rebuilt this system tomorrow, what one change would you make?",
+        "skills": [
+          "S3",
+          "S1"
+        ]
+      }
+    ],
+    "expertDesign": {
+      "choices": {
+        "2A": "2A_split",
+        "2B-visitor": "2B-visitor_hybrid",
+        "2B-staff": "2B-staff_private",
+        "3A": "3A_curated",
+        "3B": "3B_digitize",
+        "3C": "3C_none",
+        "3D": "3D_english",
+        "4A": "4A_topic",
+        "4B": "4B_handoff",
+        "4C": "4C_supervisor",
+        "4D": "4D_login",
+        "5A": "5A_pilot",
+        "5B": [
+          "5B_review",
+          "5B_language"
+        ]
+      },
+      "expectedEvents": [
+        "E4",
+        "E5"
+      ]
+    },
+    "rationale": "Shared platform with separate knowledge bases. A hybrid visitor bot absorbs summer peaks cheaply; private RAG keeps staff data in-house. With 3 effort points, it curates documents and gets vet-reviewed manuals right, because animal safety outweighs the rest. It accepts an English-only launch and watches accuracy by language to catch that gap early."
+  }
+}

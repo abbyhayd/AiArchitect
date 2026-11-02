@@ -1,0 +1,152 @@
+{
+  "$schema": "./schema.json",
+  "meta": {
+    "id": "evergreen-zoo",
+    "title": "Evergreen City Zoo",
+    "type": "GenAI",
+    "difficulty": "intro",
+    "focusSkills": ["S1", "S3"],
+    "estimatedMinutes": 25,
+    "version": "0.1.0"
+  },
+  "client": {
+    "name": "Evergreen City Zoo",
+    "ask": "A public visitor chatbot.",
+    "brief": "We want a chatbot that answers visitor questions about hours, tickets and animals.",
+    "stakeholders": [
+      {
+        "id": "sh_director",
+        "name": "Dana",
+        "role": "Executive director",
+        "question": "What worries you most about a chatbot?",
+        "answer": "It must never invent admission prices or free days.",
+        "critical": true,
+        "revealsConstraint": "price_accuracy"
+      }
+    ],
+    "discovery": { "maxQuestions": 1, "criticalBonus": { "trust": 1 } }
+  },
+  "meters": [
+    { "id": "budget", "name": "Budget", "start": 5, "target": 7, "priority": "high" },
+    { "id": "trust", "name": "Stakeholder trust", "start": 5, "target": 7, "priority": "high" }
+  ],
+  "rooms": [
+    { "id": "room_brief", "title": "Visitor Center", "kind": "brief", "goal": "Read the client's request." },
+    { "id": "room_meeting", "title": "Meeting Room", "kind": "discovery", "goal": "Ask the questions that matter." },
+    {
+      "id": "room_studio",
+      "title": "Architecture Studio",
+      "kind": "decisions",
+      "goal": "Pick a model for the visitor bot.",
+      "decisions": [
+        { "id": "d_model", "prompt": "Which model powers the visitor bot?", "selection": "single" }
+      ],
+      "reflectionPrompt": "What does this model give up in exchange for what it gains?"
+    },
+    { "id": "room_later", "title": "Six Months Later", "kind": "consequences", "goal": "See what your choices caused." },
+    { "id": "room_debrief", "title": "Debrief Gallery", "kind": "debrief", "goal": "Compare your design with the expert's." }
+  ],
+  "options": [
+    {
+      "id": "opt_faq",
+      "decision": "d_model",
+      "value": "faq",
+      "label": "FAQ bot",
+      "hint": "Cheap and fast, but rigid.",
+      "effects": { "budget": 1.5, "trust": -0.5 },
+      "effort": 0,
+      "skills": ["S3"]
+    },
+    {
+      "id": "opt_llm",
+      "decision": "d_model",
+      "value": "llm",
+      "label": "Cloud LLM",
+      "hint": "Flexible, but can invent facts.",
+      "effects": { "budget": -1, "trust": -1 },
+      "skills": ["S11"]
+    }
+  ],
+  "events": [
+    {
+      "id": "ev_price",
+      "title": "Invented free day",
+      "headline": "Zoo bot promises a free admission day that does not exist",
+      "trigger": {
+        "all": [
+          { "choice": "d_model", "is": "llm" },
+          { "asked": "sh_director", "is": false }
+        ]
+      },
+      "damage": { "trust": -2 },
+      "mitigation": { "pilotMultiplier": 0.5, "monitoringMultiplier": 0.5 },
+      "fix": {
+        "label": "Issue a public correction",
+        "cost": { "budget": -1 },
+        "recovers": { "trust": 1 }
+      }
+    }
+  ],
+  "risks": [
+    {
+      "id": "risk_invented_facts",
+      "text": "A general-purpose model may answer confidently about things it was never given.",
+      "trigger": { "choice": "d_model", "is": "llm" },
+      "severity": "high",
+      "blueprintPart": "part_model",
+      "room": "room_studio",
+      "relatedEvent": "ev_price"
+    }
+  ],
+  "blueprint": {
+    "layers": [
+      { "id": "layer_users", "label": "Users" },
+      { "id": "layer_assistants", "label": "Assistants" }
+    ],
+    "parts": [
+      {
+        "id": "part_visitors",
+        "label": "Visitors",
+        "kind": "client",
+        "layer": "layer_users",
+        "position": { "col": 0, "row": 0 },
+        "initial": "solid"
+      },
+      {
+        "id": "part_model",
+        "label": "Visitor bot model",
+        "kind": "model",
+        "layer": "layer_assistants",
+        "position": { "col": 0, "row": 0 },
+        "initial": "dashed",
+        "fills": [
+          { "when": { "choice": "d_model", "is": "llm" }, "label": "Cloud LLM" },
+          { "when": { "choice": "d_model", "is": "faq" }, "label": "FAQ bot" }
+        ]
+      }
+    ],
+    "connections": [{ "from": "part_visitors", "to": "part_model" }]
+  },
+  "debrief": {
+    "intro": "Here is how your design compares with an expert's.",
+    "reflectionPrompts": [
+      { "id": "refl_1", "text": "Which trade-off did you find hardest, and why?", "skills": ["S3"], "minWords": 20 }
+    ],
+    "expertDesign": {
+      "choices": { "d_model": "opt_faq" },
+      "askedQuestions": ["sh_director"],
+      "expectedEvents": []
+    },
+    "rationale": "A rule-based bot cannot invent prices, which the client cares about most."
+  },
+  "variants": [
+    {
+      "id": "variant_b",
+      "title": "Variant B",
+      "description": "The price constraint is stricter and fires more easily.",
+      "constraints": ["price_accuracy"],
+      "eventTriggers": { "ev_price": { "choice": "d_model", "is": "llm" } },
+      "teaser": "Next time: the zoo's servers are in the basement and it floods."
+    }
+  ]
+}
