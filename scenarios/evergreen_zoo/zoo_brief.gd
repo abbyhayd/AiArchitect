@@ -5,7 +5,7 @@ var data
 
 func _ready():
 	data = load_json_file(FILE_PATH)
-	%ClientText.text = data["client"]["name"]
+	%ClientText.text = "The Client: " + data["client"]["name"]
 	%BriefText.text = data["client"]["brief"]
 	
 
