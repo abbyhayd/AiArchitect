@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ykjcmtjkg2ej"
-path="res://.godot/imported/scene_7_six_months_later.png-2fec21651855c51b18041520dcb84646.ctex"
+uid="uid://c8ysv8j2u8ek8"
+path="res://.godot/imported/scene_4_records_archive.png-2341612ce9e9af987227e066a7489e0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/scene_7_six_months_later.png"
-dest_files=["res://.godot/imported/scene_7_six_months_later.png-2fec21651855c51b18041520dcb84646.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/scene assets/scene_4_records_archive.png"
+dest_files=["res://.godot/imported/scene_4_records_archive.png-2341612ce9e9af987227e066a7489e0f.ctex"]
 
 [params]
 

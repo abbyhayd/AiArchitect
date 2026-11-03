@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clcrdgb7qietj"
-path="res://.godot/imported/scene_5_safety_control_room.png-0e891fda83e3a4e614c5033fea1581ff.ctex"
+uid="uid://6a5hqbmcuapm"
+path="res://.godot/imported/scene_2_meeting_room.png-6cf81d5a8e81e72c5646920040ae2c71.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/scene_5_safety_control_room.png"
-dest_files=["res://.godot/imported/scene_5_safety_control_room.png-0e891fda83e3a4e614c5033fea1581ff.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/scene assets/scene_2_meeting_room.png"
+dest_files=["res://.godot/imported/scene_2_meeting_room.png-6cf81d5a8e81e72c5646920040ae2c71.ctex"]
 
 [params]
 

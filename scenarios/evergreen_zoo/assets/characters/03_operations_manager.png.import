@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb05qply41lm2"
-path="res://.godot/imported/scene_8_debrief_gallery.png-404bc17bf53bd076cebd710bad9ac297.ctex"
+uid="uid://lwkbmr363rk7"
+path="res://.godot/imported/03_operations_manager.png-9fa34ddf67b9e3e6e62144bcd074fb3e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/scene_8_debrief_gallery.png"
-dest_files=["res://.godot/imported/scene_8_debrief_gallery.png-404bc17bf53bd076cebd710bad9ac297.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/characters/03_operations_manager.png"
+dest_files=["res://.godot/imported/03_operations_manager.png-9fa34ddf67b9e3e6e62144bcd074fb3e.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6a5hqbmcuapm"
-path="res://.godot/imported/scene_2_meeting_room.png-6bfb27d7305c27c61f25204ff12be5c2.ctex"
+uid="uid://de448ft3q8ik4"
+path="res://.godot/imported/scene_1_zoo_visitor_center.png-8b73c810d0eb55998d469328cb98a8fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/scene_2_meeting_room.png"
-dest_files=["res://.godot/imported/scene_2_meeting_room.png-6bfb27d7305c27c61f25204ff12be5c2.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/scene assets/scene_1_zoo_visitor_center.png"
+dest_files=["res://.godot/imported/scene_1_zoo_visitor_center.png-8b73c810d0eb55998d469328cb98a8fa.ctex"]
 
 [params]
 

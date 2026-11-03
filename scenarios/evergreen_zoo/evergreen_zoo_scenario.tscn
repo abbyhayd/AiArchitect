@@ -1,3 +1,9 @@
 [gd_scene format=3 uid="uid://dpeas87fowscy"]
 
+[ext_resource type="Script" uid="uid://p06mnf7a7044" path="res://scenarios/evergreen_zoo/evergreen_zoo_scenario.gd" id="1_e5iai"]
+[ext_resource type="PackedScene" uid="uid://bi7cksln3ivsr" path="res://scenarios/evergreen_zoo/zoo_brief.tscn" id="2_qna34"]
+
 [node name="EvergreenZooScenario" type="Node2D" unique_id=87010496]
+script = ExtResource("1_e5iai")
+
+[node name="ZooBrief" parent="." unique_id=1384808575 instance=ExtResource("2_qna34")]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dielv6er1megx"
-path="res://.godot/imported/scene_3_architecture_studio.png-3bee3b9f9e993305725b70e3f13baffe.ctex"
+uid="uid://ybow3vnmg5b6"
+path="res://.godot/imported/juniper_red_panda_helper.png-6cc4a5cf1a3268aa33c9c37d0c77dff0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/scene_3_architecture_studio.png"
-dest_files=["res://.godot/imported/scene_3_architecture_studio.png-3bee3b9f9e993305725b70e3f13baffe.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/characters/juniper_red_panda_helper.png"
+dest_files=["res://.godot/imported/juniper_red_panda_helper.png-6cc4a5cf1a3268aa33c9c37d0c77dff0.ctex"]
 
 [params]
 

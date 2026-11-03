@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgkqgnt7rprpv"
-path="res://.godot/imported/scene_6_launch_operations.png-17f4ecef38cbf42c5811982c412d276a.ctex"
+uid="uid://dielv6er1megx"
+path="res://.godot/imported/scene_3_architecture_studio.png-7e8f1d59d1474b8aa67de970d8497788.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/scene_6_launch_operations.png"
-dest_files=["res://.godot/imported/scene_6_launch_operations.png-17f4ecef38cbf42c5811982c412d276a.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/scene assets/scene_3_architecture_studio.png"
+dest_files=["res://.godot/imported/scene_3_architecture_studio.png-7e8f1d59d1474b8aa67de970d8497788.ctex"]
 
 [params]
 

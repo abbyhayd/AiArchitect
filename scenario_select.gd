@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 
 func _on_evergreen_zoo_button_pressed():

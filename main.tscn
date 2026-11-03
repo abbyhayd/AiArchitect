@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://cpb0qja4ik2xj"]
 
+[ext_resource type="Script" uid="uid://cqvwsuaxhdccc" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="FontFile" uid="uid://4eii2mw6fwrr" path="res://ui/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf" id="1_o5qli"]
 
 [node name="Main" type="Node2D" unique_id=1063428658]
+script = ExtResource("1_0xm2m")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=774561172]
 
@@ -50,3 +52,5 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_o5qli")
 theme_override_font_sizes/font_size = 50
 text = "Options"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Start" to="." method="_on_start_pressed"]
