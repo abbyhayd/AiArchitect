@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="AI Architect"
+run/main_scene="uid://cpb0qja4ik2xj"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*uid://cqxxn4f7i6mgg"
 
 [display]
 

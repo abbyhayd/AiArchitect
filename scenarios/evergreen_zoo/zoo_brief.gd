@@ -1,27 +1,16 @@
 extends CanvasLayer
 
-var FILE_PATH = "res://data/zoo.json"
-var data
+@onready var meter_grid = $TabContainer/Meters/MetersPanel/GridContainer
+@export var meter_scene : PackedScene
 
 func _ready():
-	data = load_json_file(FILE_PATH)
-	%ClientText.text = "The Client: " + data["client"]["name"]
-	%BriefText.text = data["client"]["brief"]
+	%ClientText.text = "The Client: " + Global.current_scenario_data["client"]["name"]
+	%BriefText.text = Global.current_scenario_data["client"]["brief"]
 	
+	load_meters()
 
-
-func load_json_file(file_path: String):
-	if FileAccess.file_exists(file_path):
-		# Read the entire file content into a string
-		var json_as_text = FileAccess.get_file_as_string(file_path)
-		
-		# Parse the text directly into a Godot Dictionary or Array
-		var data = JSON.parse_string(json_as_text)
-		
-		if data != null:
-			return data
-		else:
-			print("Failed to parse JSON.")
-	else:
-		print("File does not exist at path: ", file_path)
-	return null
+func load_meters():
+	for meter in Global.current_scenario_meters:
+		var new_meter = meter_scene.instantiate()
+		new_meter.set_meter(meter, Global.current_scenario_meters[meter]["value"])
+		meter_grid.add_child(new_meter)

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://brw7tfhyad1vf" path="res://scenarios/evergreen_zoo/zoo_brief.gd" id="1_ongu4"]
 [ext_resource type="Texture2D" uid="uid://hr67alorojhq" path="res://scenarios/evergreen_zoo/assets/scene assets/zoo_brief_bg.png" id="2_c2vxt"]
+[ext_resource type="PackedScene" uid="uid://k8vvqp24qqtm" path="res://scenes/meter.tscn" id="2_esut2"]
 [ext_resource type="FontFile" uid="uid://4eii2mw6fwrr" path="res://ui/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf" id="2_rc3ir"]
 [ext_resource type="FontFile" uid="uid://bb1owdiwhbq5p" path="res://ui/fonts/AtkinsonHyperlegible-Regular.ttf" id="3_c2vxt"]
 
@@ -13,15 +14,6 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ia4vg"]
-bg_color = Color(0.94509804, 0.8352941, 0.57254905, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-expand_margin_left = 10.0
-expand_margin_top = 5.0
-expand_margin_right = 10.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c2vxt"]
 bg_color = Color(0.87058824, 0.7294118, 0.38039216, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -30,8 +22,17 @@ expand_margin_top = 5.0
 expand_margin_right = 10.0
 expand_margin_bottom = 5.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c2vxt"]
+bg_color = Color(0.94509804, 0.8352941, 0.57254905, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+expand_margin_left = 10.0
+expand_margin_top = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 5.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eltui"]
-bg_color = Color(0.8698201, 0.7297612, 0.38077742, 1)
+bg_color = Color(0.94509804, 0.8352941, 0.57254905, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 expand_margin_left = 10.0
@@ -55,6 +56,7 @@ corner_radius_bottom_left = 15
 
 [node name="ZooBrief" type="CanvasLayer" unique_id=1384808575]
 script = ExtResource("1_ongu4")
+meter_scene = ExtResource("2_esut2")
 
 [node name="BG_picture" type="TextureRect" parent="." unique_id=1976271449]
 offset_left = -19.0
@@ -138,7 +140,7 @@ custom_minimum_size = Vector2(893.15, 888.505)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ly126")
 
-[node name="Label" type="Label" parent="TabContainer/Meters/MetersPanel" unique_id=1947313264]
+[node name="ConstraintMeters" type="Label" parent="TabContainer/Meters/MetersPanel" unique_id=1947313264]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 5
@@ -153,6 +155,22 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_rc3ir")
 theme_override_font_sizes/font_size = 35
 text = "Constraint Meters"
+
+[node name="GridContainer" type="GridContainer" parent="TabContainer/Meters/MetersPanel" unique_id=790497877]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 66.150024
+offset_top = -324.2525
+offset_right = -66.150024
+offset_bottom = 399.7475
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 450
+theme_override_constants/v_separation = 200
+columns = 2
 
 [node name="Button" type="Button" parent="." unique_id=1969876907]
 offset_left = 1386.0
