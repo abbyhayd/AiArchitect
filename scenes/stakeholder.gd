@@ -2,6 +2,8 @@ extends Control
 
 var tween : Tween
 var flipped #true means on left side
+var hovered = false
+var answer_shown = false
 
 func _ready():
 	pivot_offset = size / 2
@@ -12,9 +14,17 @@ func _ready():
 		%HoverBubble.position.x =(%Picture.position.x * 2.0) - %HoverBubble.position.x - %HoverBubble.size.x/2
 		%HoverBubble.flip_h = true
 		
-		%AnswerBubble.position.x =(%Picture.position.x * 2.0) - %AnswerBubble.position.x
+		%AnswerBubble.position.x =(%Picture.position.x * 2.0) - %AnswerBubble.position.x - %AnswerBubble.size.x/3
 		%AnswerBubble.flip_h = true
-
+		
+func _process(_delta):
+	if Input.is_action_just_pressed("left_click") and hovered:
+		%IdleBubble.visible = false
+		%HoverBubble.visible = false
+		%AnswerBubble.visible = true
+		answer_shown = true
+		
+	
 func initalize_stakeholder(picture_path, title, short_q, long_q, ans):
 	%Picture.texture = load(picture_path)
 	%Title.text = title
@@ -23,14 +33,18 @@ func initalize_stakeholder(picture_path, title, short_q, long_q, ans):
 	%AnswerText.text = ans
 
 func _on_mouse_entered():
-	%IdleBubble.visible = false
-	%HoverBubble.visible = true
+	if not answer_shown:
+		%IdleBubble.visible = false
+		%HoverBubble.visible = true
+	hovered = true
 	reset_tween()
 	tween.tween_property(%Picture, "scale", Vector2(1.1, 1.1), 0.05)
 	
 func _on_mouse_exited():
-	%IdleBubble.visible = true
-	%HoverBubble.visible = false
+	if not answer_shown:
+		%IdleBubble.visible = true
+		%HoverBubble.visible = false
+	hovered = false
 	reset_tween()
 	tween.tween_property(%Picture, "scale", Vector2.ONE, 0.05)
 

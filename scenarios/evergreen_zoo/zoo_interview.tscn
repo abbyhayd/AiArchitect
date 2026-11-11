@@ -63,17 +63,6 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("4_2e1u4")
 
-[node name="Stakeholders" type="GridContainer" parent="." unique_id=424602349]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 200)
-offset_left = 73.0
-offset_top = 494.0
-offset_right = 1978.0
-offset_bottom = 1166.0
-theme_override_constants/h_separation = 380
-theme_override_constants/v_separation = 350
-columns = 5
-
 [node name="StakeholderMarkers" type="Node2D" parent="." unique_id=1501144854]
 unique_name_in_owner = true
 position = Vector2(108, 0)

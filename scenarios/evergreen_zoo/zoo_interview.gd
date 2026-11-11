@@ -22,4 +22,3 @@ func load_stakeholders():
 			)
 		stakeholder_parent.add_child(new_stakeholder)
 		index += 1
-		#%Stakeholders.add_child(new_stakeholder)

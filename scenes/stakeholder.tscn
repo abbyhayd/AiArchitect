@@ -111,6 +111,7 @@ texture = SubResource("AtlasTexture_ly126")
 
 [node name="AnswerText" type="Label" parent="AnswerBubble" unique_id=1236684967]
 unique_name_in_owner = true
+custom_maximum_size = Vector2(256, 100)
 layout_mode = 0
 offset_left = 11.0
 offset_top = 12.0
