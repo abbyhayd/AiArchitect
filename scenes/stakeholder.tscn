@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://csyvr6lim4tk6"]
+
+[ext_resource type="Script" uid="uid://3css6bj2mq3x" path="res://scenes/stakeholder.gd" id="1_eu37v"]
+[ext_resource type="Texture2D" uid="uid://qqfapg0ri8if" path="res://scenarios/evergreen_zoo/assets/characters/zoo_marketing_director.png" id="1_jvuh4"]
+[ext_resource type="Texture2D" uid="uid://cuhyaksgieh0j" path="res://ui/bubbles-sheet.svg" id="2_vlblx"]
+[ext_resource type="FontFile" uid="uid://bb1owdiwhbq5p" path="res://ui/fonts/AtkinsonHyperlegible-Regular.ttf" id="3_o8m6y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cl6o"]
+atlas = ExtResource("2_vlblx")
+region = Rect2(683.1167, 734.45734, 332.68506, 231.50769)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ly126"]
+atlas = ExtResource("2_vlblx")
+region = Rect2(458.63757, 12.544991, 269.81818, 149.81818)
+
+[node name="Stakeholder" type="Control" unique_id=1972916353]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_eu37v")
+
+[node name="Picture" type="TextureRect" parent="." unique_id=1394330940]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 200)
+custom_maximum_size = Vector2(200, 200)
+layout_mode = 0
+offset_left = -101.0
+offset_top = -140.0
+offset_right = 99.0
+offset_bottom = 60.0
+texture = ExtResource("1_jvuh4")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="Picture" unique_id=1503784910]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 100.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_o8m6y")
+theme_override_font_sizes/font_size = 20
+text = "Marketing Director"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IdleBubble" type="TextureRect" parent="." unique_id=1696125924]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 11.0
+offset_top = -218.0
+offset_right = 217.0
+offset_bottom = -94.0
+texture = SubResource("AtlasTexture_2cl6o")
+expand_mode = 1
+
+[node name="IdleText" type="Label" parent="IdleBubble" unique_id=108115794]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 20.0
+offset_top = 33.0
+offset_right = 60.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_o8m6y")
+theme_override_font_sizes/font_size = 20
+text = "idle"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HoverBubble" type="TextureRect" parent="." unique_id=1799864268]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = -7.0
+offset_top = -255.0
+offset_right = 363.0
+offset_bottom = -92.0
+texture = SubResource("AtlasTexture_2cl6o")
+expand_mode = 1
+
+[node name="HoverText" type="Label" parent="HoverBubble" unique_id=1706871061]
+unique_name_in_owner = true
+custom_maximum_size = Vector2(300, 10000)
+layout_mode = 0
+offset_left = 31.0
+offset_top = 36.0
+offset_right = 331.0
+offset_bottom = 89.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_o8m6y")
+theme_override_font_sizes/font_size = 20
+text = "What documents would the assistant use?"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AnswerBubble" type="TextureRect" parent="." unique_id=530269654]
+unique_name_in_owner = true
+visible = false
+custom_maximum_size = Vector2(300, 150)
+layout_mode = 0
+offset_left = 16.0
+offset_top = -241.0
+offset_right = 285.0
+offset_bottom = -92.0
+texture = SubResource("AtlasTexture_ly126")
+
+[node name="AnswerText" type="Label" parent="AnswerBubble" unique_id=1236684967]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 11.0
+offset_top = 12.0
+offset_right = 267.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_o8m6y")
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

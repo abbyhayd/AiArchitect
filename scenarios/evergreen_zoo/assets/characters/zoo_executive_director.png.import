@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1lhy2bw3288c"
-path="res://.godot/imported/04_communications_lead.png-a5623a26182a3623c495ef8676f72f97.ctex"
+uid="uid://cif6rx55itk8y"
+path="res://.godot/imported/zoo_executive_director.png-9575f3c4d90da4af7afef6062e159102.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/characters/04_communications_lead.png"
-dest_files=["res://.godot/imported/04_communications_lead.png-a5623a26182a3623c495ef8676f72f97.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/characters/zoo_executive_director.png"
+dest_files=["res://.godot/imported/zoo_executive_director.png-9575f3c4d90da4af7afef6062e159102.ctex"]
 
 [params]
 

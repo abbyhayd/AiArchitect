@@ -86,11 +86,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_y3ix0")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_ia4vg")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_c2vxt")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_eltui")
-current_tab = 1
+current_tab = 0
 metadata/_edit_group_ = true
 
 [node name="Brief" type="CenterContainer" parent="TabContainer" unique_id=1552979803]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -132,6 +131,7 @@ text = "Test"
 autowrap_mode = 3
 
 [node name="Meters" type="CenterContainer" parent="TabContainer" unique_id=2070781685]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -156,7 +156,8 @@ theme_override_fonts/font = ExtResource("2_rc3ir")
 theme_override_font_sizes/font_size = 35
 text = "Constraint Meters"
 
-[node name="GridContainer" type="GridContainer" parent="TabContainer/Meters/MetersPanel" unique_id=790497877]
+[node name="MeterGrid" type="GridContainer" parent="TabContainer/Meters/MetersPanel" unique_id=790497877]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -172,10 +173,12 @@ theme_override_constants/h_separation = 450
 theme_override_constants/v_separation = 200
 columns = 2
 
-[node name="Button" type="Button" parent="." unique_id=1969876907]
+[node name="EnterButton" type="Button" parent="." unique_id=1969876907]
 offset_left = 1386.0
 offset_top = 933.0
 offset_right = 1594.0
 offset_bottom = 1023.0
 theme_override_font_sizes/font_size = 51
 text = "Enter"
+
+[connection signal="pressed" from="EnterButton" to="." method="_on_enter_button_pressed"]

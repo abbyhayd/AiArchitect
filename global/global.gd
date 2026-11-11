@@ -2,6 +2,7 @@ extends Node
 
 var current_scenario_data
 var current_scenario_meters = {}
+var current_stakeholder_amount = 0
 var scenario_paths = {
 	"EvergreenCityZoo" : "res://data/zoo.json"
 }
@@ -11,6 +12,7 @@ func load_scenario(scenario_name):
 		push_error("Scenario doesn't exist.")
 		return
 	current_scenario_data = load_json_file(scenario_paths[scenario_name])
+	current_stakeholder_amount = len(current_scenario_data["client"]["stakeholders"])
 	load_scenario_meters()
 
 func load_scenario_meters():

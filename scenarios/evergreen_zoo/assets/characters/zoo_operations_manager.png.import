@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6q4asgkctm5t"
-path="res://.godot/imported/05_it_security_lead.png-a0a5d1687dfc818fd5f0073dc2160117.ctex"
+uid="uid://lwkbmr363rk7"
+path="res://.godot/imported/zoo_operations_manager.png-55e8b2e17c02ca993170f870b7490a7f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/characters/05_it_security_lead.png"
-dest_files=["res://.godot/imported/05_it_security_lead.png-a0a5d1687dfc818fd5f0073dc2160117.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/characters/zoo_operations_manager.png"
+dest_files=["res://.godot/imported/zoo_operations_manager.png-55e8b2e17c02ca993170f870b7490a7f.ctex"]
 
 [params]
 

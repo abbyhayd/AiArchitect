@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qqfapg0ri8if"
-path="res://.godot/imported/01_marketing_director.png-6f7e1062d21689bfa5e2578c5e03afd5.ctex"
+uid="uid://b8yxlts3k4ctc"
+path="res://.godot/imported/zoo_accessibility_coordinator.png-2f3c10815f636050ca317de1f38f014c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/characters/01_marketing_director.png"
-dest_files=["res://.godot/imported/01_marketing_director.png-6f7e1062d21689bfa5e2578c5e03afd5.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/characters/zoo_accessibility_coordinator.png"
+dest_files=["res://.godot/imported/zoo_accessibility_coordinator.png-2f3c10815f636050ca317de1f38f014c.ctex"]
 
 [params]
 

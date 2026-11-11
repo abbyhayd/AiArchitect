@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-@onready var meter_grid = $TabContainer/Meters/MetersPanel/GridContainer
 @export var meter_scene : PackedScene
 
 func _ready():
@@ -13,4 +12,8 @@ func load_meters():
 	for meter in Global.current_scenario_meters:
 		var new_meter = meter_scene.instantiate()
 		new_meter.set_meter(meter, Global.current_scenario_meters[meter]["value"])
-		meter_grid.add_child(new_meter)
+		%MeterGrid.add_child(new_meter)
+
+
+func _on_enter_button_pressed():
+	get_tree().change_scene_to_file("res://scenarios/evergreen_zoo/zoo_interview.tscn")

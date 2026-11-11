@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqtooki6nxar2"
-path="res://.godot/imported/10_sustainability_officer.png-60f1e9901cd7f18fa7aabfe3174dc247.ctex"
+path="res://.godot/imported/zoo_sustainability_officer.png-98d39fa4dc84280ce6d5f3f59a3d5995.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenarios/evergreen_zoo/assets/characters/10_sustainability_officer.png"
-dest_files=["res://.godot/imported/10_sustainability_officer.png-60f1e9901cd7f18fa7aabfe3174dc247.ctex"]
+source_file="res://scenarios/evergreen_zoo/assets/characters/zoo_sustainability_officer.png"
+dest_files=["res://.godot/imported/zoo_sustainability_officer.png-98d39fa4dc84280ce6d5f3f59a3d5995.ctex"]
 
 [params]
 
