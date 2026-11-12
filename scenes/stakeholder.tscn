@@ -59,17 +59,19 @@ expand_mode = 1
 
 [node name="IdleText" type="Label" parent="IdleBubble" unique_id=108115794]
 unique_name_in_owner = true
+custom_maximum_size = Vector2(180, 100)
 layout_mode = 0
-offset_left = 20.0
+offset_left = 12.0
 offset_top = 33.0
-offset_right = 60.0
+offset_right = 191.0
 offset_bottom = 58.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_o8m6y")
 theme_override_font_sizes/font_size = 20
-text = "idle"
+text = "Accessibility needs?"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="HoverBubble" type="TextureRect" parent="." unique_id=1799864268]
 unique_name_in_owner = true
@@ -77,23 +79,23 @@ visible = false
 layout_mode = 0
 offset_left = -7.0
 offset_top = -255.0
-offset_right = 363.0
+offset_right = 232.0
 offset_bottom = -92.0
 texture = SubResource("AtlasTexture_2cl6o")
 expand_mode = 1
 
 [node name="HoverText" type="Label" parent="HoverBubble" unique_id=1706871061]
 unique_name_in_owner = true
-custom_maximum_size = Vector2(300, 10000)
+custom_maximum_size = Vector2(230, 70)
 layout_mode = 0
-offset_left = 31.0
+offset_left = 2.0
 offset_top = 36.0
-offset_right = 331.0
+offset_right = 232.0
 offset_bottom = 89.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_o8m6y")
 theme_override_font_sizes/font_size = 20
-text = "What documents would the assistant use?"
+text = "How does this fit your mission?"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -101,25 +103,26 @@ autowrap_mode = 3
 [node name="AnswerBubble" type="TextureRect" parent="." unique_id=530269654]
 unique_name_in_owner = true
 visible = false
-custom_maximum_size = Vector2(300, 150)
 layout_mode = 0
 offset_left = 16.0
-offset_top = -241.0
-offset_right = 285.0
+offset_top = -221.0
+offset_right = 228.1141
 offset_bottom = -92.0
 texture = SubResource("AtlasTexture_ly126")
+expand_mode = 1
 
 [node name="AnswerText" type="Label" parent="AnswerBubble" unique_id=1236684967]
 unique_name_in_owner = true
-custom_maximum_size = Vector2(256, 100)
 layout_mode = 0
 offset_left = 11.0
 offset_top = 12.0
-offset_right = 267.0
-offset_bottom = 64.0
+offset_right = 197.0
+offset_bottom = 93.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_o8m6y")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

@@ -3,7 +3,17 @@
 [ext_resource type="Script" uid="uid://wsuicq4jhjib" path="res://scenarios/evergreen_zoo/zoo_interview.gd" id="1_gu1ni"]
 [ext_resource type="PackedScene" uid="uid://csyvr6lim4tk6" path="res://scenes/stakeholder.tscn" id="2_nmnsm"]
 [ext_resource type="Texture2D" uid="uid://l6l0s5yv5jmv" path="res://scenarios/evergreen_zoo/assets/table.png" id="4_2e1u4"]
+[ext_resource type="Texture2D" uid="uid://crkbixenk1erc" path="res://scenarios/evergreen_zoo/assets/paper.png" id="5_55w5q"]
+[ext_resource type="FontFile" uid="uid://bb1owdiwhbq5p" path="res://ui/fonts/AtkinsonHyperlegible-Regular.ttf" id="6_ykrar"]
 [ext_resource type="Texture2D" uid="uid://6a5hqbmcuapm" path="res://scenarios/evergreen_zoo/assets/scene assets/scene_2_meeting_room.png" id="11_17ugc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8m6y"]
+atlas = ExtResource("11_17ugc")
+region = Rect2(224.14954, 63.382133, 1551.6686, 473.34515)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cl6o"]
+atlas = ExtResource("11_17ugc")
+region = Rect2(2246.599, 126.31688, 1429.3208, 345.28314)
 
 [node name="ZooInterview" type="CanvasLayer" unique_id=183697564]
 script = ExtResource("1_gu1ni")
@@ -17,7 +27,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="BG" unique_id=848894279]
+[node name="Floor" type="ColorRect" parent="BG" unique_id=848894279]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,26 +36,25 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.078431375, 0.13333334, 0.11764706, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="BG" unique_id=393524009]
+[node name="Wall" type="ColorRect" parent="BG" unique_id=393524009]
 layout_mode = 0
 offset_right = 1928.0
 offset_bottom = 391.0
 color = Color(0.8862745, 0.80784315, 0.69411767, 1)
 
-[node name="BG_banner" type="TextureRect" parent="BG" unique_id=1553794790]
-visible = false
+[node name="wall_graph" type="TextureRect" parent="BG" unique_id=1553794790]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -540.0
-offset_right = -4.0
-offset_bottom = -152.0
+offset_left = 154.0
+offset_top = -492.0
+offset_right = -1249.0
+offset_bottom = -225.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("11_17ugc")
+texture = SubResource("AtlasTexture_o8m6y")
 expand_mode = 1
 
 [node name="Table" type="TextureRect" parent="BG" unique_id=1745863]
@@ -55,17 +64,27 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -548.0
+offset_left = -590.0
 offset_top = -687.0
-offset_right = 150.0
+offset_right = 61.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("4_2e1u4")
+expand_mode = 1
+
+[node name="wall_whiteboard" type="TextureRect" parent="BG" unique_id=971522270]
+layout_mode = 0
+offset_left = 1083.0
+offset_top = 77.0
+offset_right = 1807.8551
+offset_bottom = 252.0
+texture = SubResource("AtlasTexture_2cl6o")
+expand_mode = 1
 
 [node name="StakeholderMarkers" type="Node2D" parent="." unique_id=1501144854]
 unique_name_in_owner = true
-position = Vector2(108, 0)
+position = Vector2(66, 0)
 
 [node name="Left4" type="Marker2D" parent="StakeholderMarkers" unique_id=1807359218]
 position = Vector2(360, 480)
@@ -80,19 +99,182 @@ position = Vector2(284, 790)
 position = Vector2(239, 975)
 
 [node name="Right4" type="Marker2D" parent="StakeholderMarkers" unique_id=360023732]
-position = Vector2(947, 480)
+position = Vector2(905, 480)
 
 [node name="Right3" type="Marker2D" parent="StakeholderMarkers" unique_id=1552446151]
-position = Vector2(981, 622)
+position = Vector2(939, 622)
 
 [node name="Right2" type="Marker2D" parent="StakeholderMarkers" unique_id=413829601]
-position = Vector2(1022, 790)
+position = Vector2(980, 790)
 
 [node name="Right1" type="Marker2D" parent="StakeholderMarkers" unique_id=1084465746]
-position = Vector2(1067, 975)
+position = Vector2(1025, 975)
 
 [node name="TopLeft" type="Marker2D" parent="StakeholderMarkers" unique_id=340874029]
-position = Vector2(556, 332)
+position = Vector2(534, 332)
 
 [node name="TopRight" type="Marker2D" parent="StakeholderMarkers" unique_id=1626919143]
-position = Vector2(745, 332)
+position = Vector2(723, 332)
+
+[node name="InterviewNotes" type="TextureRect" parent="." unique_id=532090953]
+offset_left = 1364.0
+offset_top = 206.0
+offset_right = 1890.0
+offset_bottom = 1049.0
+texture = ExtResource("5_55w5q")
+expand_mode = 1
+
+[node name="Items" type="Control" parent="InterviewNotes" unique_id=1210836526]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Q1" type="Label" parent="InterviewNotes/Items" unique_id=88671772]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 60.0
+offset_right = 66.0
+offset_bottom = 145.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 30
+text = "Q1 "
+
+[node name="Q2" type="Label" parent="InterviewNotes/Items" unique_id=663227629]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 181.0
+offset_right = 66.0
+offset_bottom = 266.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 30
+text = "Q2"
+
+[node name="Q3" type="Label" parent="InterviewNotes/Items" unique_id=557707496]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 297.0
+offset_right = 66.0
+offset_bottom = 382.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 30
+text = "Q3"
+
+[node name="Q4" type="Label" parent="InterviewNotes/Items" unique_id=11644919]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 419.0
+offset_right = 66.0
+offset_bottom = 504.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 30
+text = "Q4"
+
+[node name="Q5" type="Label" parent="InterviewNotes/Items" unique_id=1597245281]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 538.0
+offset_right = 66.0
+offset_bottom = 623.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 30
+text = "Q5"
+
+[node name="Q6" type="Label" parent="InterviewNotes/Items" unique_id=643401226]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 662.0
+offset_right = 68.0
+offset_bottom = 747.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 30
+text = "Q6 "
+
+[node name="Q_and_As" type="Control" parent="InterviewNotes" unique_id=1429015708]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Q_and_A1" type="Label" parent="InterviewNotes/Q_and_As" unique_id=1137322632]
+custom_maximum_size = Vector2(445, 120)
+layout_mode = 0
+offset_left = 72.0
+offset_top = 64.0
+offset_right = 517.0
+offset_bottom = 184.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 23
+autowrap_mode = 3
+
+[node name="Q_and_A2" type="Label" parent="InterviewNotes/Q_and_As" unique_id=50553778]
+custom_maximum_size = Vector2(445, 120)
+layout_mode = 0
+offset_left = 72.0
+offset_top = 185.0
+offset_right = 517.0
+offset_bottom = 305.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 23
+autowrap_mode = 3
+
+[node name="Q_and_A3" type="Label" parent="InterviewNotes/Q_and_As" unique_id=881392591]
+custom_maximum_size = Vector2(445, 120)
+layout_mode = 0
+offset_left = 72.0
+offset_top = 301.0
+offset_right = 517.0
+offset_bottom = 421.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 23
+autowrap_mode = 3
+
+[node name="Q_and_A4" type="Label" parent="InterviewNotes/Q_and_As" unique_id=1576139824]
+custom_maximum_size = Vector2(445, 120)
+layout_mode = 0
+offset_left = 72.0
+offset_top = 423.0
+offset_right = 517.0
+offset_bottom = 543.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 23
+autowrap_mode = 3
+
+[node name="Q_and_A5" type="Label" parent="InterviewNotes/Q_and_As" unique_id=567341296]
+custom_maximum_size = Vector2(445, 120)
+layout_mode = 0
+offset_left = 72.0
+offset_top = 542.0
+offset_right = 517.0
+offset_bottom = 662.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 23
+autowrap_mode = 3
+
+[node name="Q_and_A6" type="Label" parent="InterviewNotes/Q_and_As" unique_id=1359220380]
+custom_maximum_size = Vector2(445, 120)
+layout_mode = 0
+offset_left = 72.0
+offset_top = 666.0
+offset_right = 517.0
+offset_bottom = 786.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("6_ykrar")
+theme_override_font_sizes/font_size = 23
+autowrap_mode = 3

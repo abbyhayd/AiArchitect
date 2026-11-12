@@ -1,0 +1,196 @@
+[gd_scene format=3 uid="uid://b7fenpju3bgoi"]
+
+[ext_resource type="Script" uid="uid://vs31gwc7ah35" path="res://scenes/scenario_file.gd" id="1_1mpcn"]
+[ext_resource type="FontFile" uid="uid://bb1owdiwhbq5p" path="res://ui/fonts/AtkinsonHyperlegible-Regular.ttf" id="1_dpm7t"]
+[ext_resource type="FontFile" uid="uid://4eii2mw6fwrr" path="res://ui/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf" id="2_1mpcn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mpcn"]
+bg_color = Color(0.94509804, 0.8352941, 0.57254905, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fs8o6"]
+bg_color = Color(0.87058824, 0.7294118, 0.38039216, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+expand_margin_left = 10.0
+expand_margin_top = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hhfbd"]
+bg_color = Color(0.94509804, 0.8352941, 0.57254905, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+expand_margin_left = 10.0
+expand_margin_top = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b8i7"]
+bg_color = Color(0.94509804, 0.8352941, 0.57254905, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+expand_margin_left = 10.0
+expand_margin_top = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y4t8c"]
+bg_color = Color(0.94509804, 0.9137255, 0.8235294, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_horyn"]
+bg_color = Color(0.94509804, 0.9137255, 0.8235294, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="ScenarioFile" type="Control" unique_id=1018778286]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1mpcn")
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=1996840406]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 71.0
+offset_top = -492.0
+offset_right = 1048.0
+offset_bottom = 492.0
+grow_vertical = 2
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0, 0, 0, 1)
+theme_override_colors/font_unselected_color = Color(0, 0, 0, 1)
+theme_override_constants/side_margin = 38
+theme_override_constants/tab_separation = 21
+theme_override_fonts/font = ExtResource("1_dpm7t")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/panel = SubResource("StyleBoxFlat_1mpcn")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_fs8o6")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_hhfbd")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_3b8i7")
+current_tab = 2
+metadata/_edit_group_ = true
+
+[node name="Brief" type="CenterContainer" parent="TabContainer" unique_id=1560416249]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="BriefPanel" type="Panel" parent="TabContainer/Brief" unique_id=2019548523]
+custom_minimum_size = Vector2(893.15, 888.505)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y4t8c")
+
+[node name="ClientText" type="Label" parent="TabContainer/Brief/BriefPanel" unique_id=1652178810]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -23.0
+offset_top = 23.5
+offset_right = 24.0
+offset_bottom = 54.5
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_1mpcn")
+theme_override_font_sizes/font_size = 35
+text = "Test"
+
+[node name="BriefText" type="Label" parent="TabContainer/Brief/BriefPanel" unique_id=1700906778]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 0
+offset_left = 21.0
+offset_top = 75.5
+offset_right = 864.0
+offset_bottom = 275.5
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_dpm7t")
+theme_override_font_sizes/font_size = 25
+text = "Test"
+autowrap_mode = 3
+
+[node name="Meters" type="CenterContainer" parent="TabContainer" unique_id=1364444340]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MetersPanel" type="Panel" parent="TabContainer/Meters" unique_id=1967379705]
+custom_minimum_size = Vector2(893.15, 888.505)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_horyn")
+
+[node name="ConstraintMeters" type="Label" parent="TabContainer/Meters/MetersPanel" unique_id=2079603213]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -142.0
+offset_top = 23.5
+offset_right = 142.0
+offset_bottom = 66.5
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_1mpcn")
+theme_override_font_sizes/font_size = 35
+text = "Constraint Meters"
+
+[node name="MeterGrid" type="GridContainer" parent="TabContainer/Meters/MetersPanel" unique_id=959756351]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 66.150024
+offset_top = -324.2525
+offset_right = -66.150024
+offset_bottom = 399.7475
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 450
+theme_override_constants/v_separation = 200
+columns = 2
+
+[node name="Interview" type="CenterContainer" parent="TabContainer" unique_id=1875683372]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="InterviewPanel" type="Panel" parent="TabContainer/Interview" unique_id=1090159016]
+custom_minimum_size = Vector2(893.15, 888.505)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y4t8c")
+
+[node name="Title" type="Label" parent="TabContainer/Interview/InterviewPanel" unique_id=766956053]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -23.0
+offset_top = 23.5
+offset_right = 24.0
+offset_bottom = 54.5
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_1mpcn")
+theme_override_font_sizes/font_size = 35
+text = "Interview Notes"

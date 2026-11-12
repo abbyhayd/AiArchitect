@@ -1,18 +1,25 @@
 extends Node
 
-var current_scenario_data
-var current_scenario_meters = {}
-var current_stakeholder_amount = 0
 var scenario_paths = {
 	"EvergreenCityZoo" : "res://data/zoo.json"
 }
+
+var current_scenario_data
+var current_scenario_meters = {}
+var current_room
+
+var max_interview_q
+var interview_questions_asked = {}
+var all_interview_questions_asked
+
+var room_reached
 
 func load_scenario(scenario_name):
 	if scenario_name not in scenario_paths:
 		push_error("Scenario doesn't exist.")
 		return
 	current_scenario_data = load_json_file(scenario_paths[scenario_name])
-	current_stakeholder_amount = len(current_scenario_data["client"]["stakeholders"])
+	max_interview_q = current_scenario_data["client"]["discovery"]["maxQuestions"]
 	load_scenario_meters()
 
 func load_scenario_meters():
@@ -23,6 +30,9 @@ func load_scenario_meters():
 			"target": meter["target"],
 			"priority": meter["priority"]
 		}
+
+func reset_scenario():
+	pass
 
 func load_json_file(file_path: String):
 	if FileAccess.file_exists(file_path):
