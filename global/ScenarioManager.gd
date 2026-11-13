@@ -12,6 +12,12 @@ var max_interview_q
 var interview_questions_asked = {}
 var all_interview_questions_asked
 
+#array of dictionaries
+var architecture_questions = []
+#each index has an array of all possible answers
+#to its corresponding question in architecture_questions
+var architecture_decisions = []
+
 var room_reached
 
 func load_scenario(scenario_name):
@@ -20,7 +26,9 @@ func load_scenario(scenario_name):
 		return
 	current_scenario_data = load_json_file(scenario_paths[scenario_name])
 	max_interview_q = current_scenario_data["client"]["discovery"]["maxQuestions"]
+		
 	load_scenario_meters()
+	load_architecture_data()
 
 func load_scenario_meters():
 	for meter in current_scenario_data["meters"]:
@@ -30,6 +38,18 @@ func load_scenario_meters():
 			"target": meter["target"],
 			"priority": meter["priority"]
 		}
+func load_architecture_data():
+	for room in current_scenario_data["rooms"]:
+		if room["id"] == "studio":
+			architecture_questions = room["decisions"]
+	
+	for decision in architecture_questions:
+		var possible_answers = []
+		for option in current_scenario_data["options"]:
+			if option["decision"] == decision["id"]:
+				possible_answers.append(option)
+		architecture_decisions.append(possible_answers)
+	
 
 func reset_scenario():
 	pass

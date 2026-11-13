@@ -1,0 +1,8 @@
+[gd_resource type="Theme" format=3 uid="uid://bw4xklxww67e"]
+
+[ext_resource type="FontFile" uid="uid://4eii2mw6fwrr" path="res://ui/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf" id="1_ks2wd"]
+
+[resource]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/font_sizes/font_size = 45
+Label/fonts/font = ExtResource("1_ks2wd")

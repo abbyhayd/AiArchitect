@@ -113,6 +113,7 @@ expand_mode = 1
 
 [node name="AnswerText" type="Label" parent="AnswerBubble" unique_id=1236684967]
 unique_name_in_owner = true
+custom_maximum_size = Vector2(200, 200)
 layout_mode = 0
 offset_left = 11.0
 offset_top = 12.0

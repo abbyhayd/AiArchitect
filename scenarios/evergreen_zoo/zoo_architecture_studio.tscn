@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://c27o0p5wjqola"]
+
+[ext_resource type="Script" uid="uid://c3qq1424y1bsg" path="res://scenarios/evergreen_zoo/zoo_architecture_studio.gd" id="1_0qfuv"]
+[ext_resource type="PackedScene" uid="uid://c3l361y135yrm" path="res://scenes/decision.tscn" id="2_4y4vf"]
+[ext_resource type="Texture2D" uid="uid://dacrool0fhlbj" path="res://scenarios/evergreen_zoo/assets/whiteboard.png" id="2_w8bm4"]
+[ext_resource type="Theme" uid="uid://bw4xklxww67e" path="res://scenarios/evergreen_zoo/assets/themes/zoo_architecture_heading.tres" id="3_w8bm4"]
+
+[node name="ZooArchitectureStudio" type="CanvasLayer" unique_id=1284202710]
+script = ExtResource("1_0qfuv")
+decision = ExtResource("2_4y4vf")
+
+[node name="Wall" type="Control" parent="." unique_id=2045685045]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Wall" type="ColorRect" parent="Wall" unique_id=264983537]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.8509804, 0.8745098, 0.8901961, 1)
+metadata/_edit_lock_ = true
+
+[node name="WallTrim" type="ColorRect" parent="Wall" unique_id=37478419]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -57.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.19607843, 0.24313726, 0.24313726, 1)
+metadata/_edit_lock_ = true
+
+[node name="Whiteboard" type="TextureRect" parent="Wall" unique_id=1810422770]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -477.0
+offset_right = 929.0
+offset_bottom = 433.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_w8bm4")
+expand_mode = 1
+
+[node name="Questions" type="Control" parent="." unique_id=598011188]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 890.0
+offset_top = 139.0
+offset_right = 930.0
+offset_bottom = 179.0
+
+[node name="Label" type="Label" parent="Questions" unique_id=1448369847]
+layout_mode = 0
+offset_left = 262.0
+offset_top = 1.0
+offset_right = 656.0
+offset_bottom = 56.0
+theme = ExtResource("3_w8bm4")
+text = "One system or two?"
+
+[node name="Label2" type="Label" parent="Questions" unique_id=493351713]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 386.0
+offset_right = 373.0
+offset_bottom = 441.0
+theme = ExtResource("3_w8bm4")
+text = "Visitor bot model?"
+
+[node name="Label3" type="Label" parent="Questions" unique_id=1703287239]
+layout_mode = 0
+offset_left = 504.0
+offset_top = 387.0
+offset_right = 954.0
+offset_bottom = 442.0
+theme = ExtResource("3_w8bm4")
+text = "Staff assistant model?"
+
+[node name="Control" type="Control" parent="." unique_id=1752015315]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="Control" unique_id=1439779186]
+layout_mode = 0
+offset_right = 788.0
+offset_bottom = 1074.0
+
+[node name="TabContainer" type="TabContainer" parent="Control/Panel" unique_id=1489969335]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_w8bm4")
+theme_override_font_sizes/font_size = 25

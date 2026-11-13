@@ -275,10 +275,6 @@
       "id": "brief",
       "title": "Zoo Visitor Center",
       "kind": "brief",
-      "scene": {
-        "image": "ui/scenes/lobby.svg",
-        "alt": "The zoo entrance: a wooden gate arch reading Evergreen City Zoo, with trees and rolling lawns."
-      },
       "goal": "Meet your client.",
       "helperText": "You're the lead AI engineer at Northbound AI Consulting. Evergreen City Zoo is a nonprofit with about 1 million visitors a year, 300 staff and 500 volunteers. Guest services answers about 2,000 repetitive calls and emails a week, and new staff struggle to find procedures spread across binders, PDFs and a shared drive. The first-year budget is $60,000. They want two assistants: a public visitor bot and an internal staff assistant. There's no single winning score: the client has priorities, and you'll only learn all of them if you ask the right questions.",
       "tradeOffCheck": {
@@ -289,10 +285,6 @@
       "id": "interview",
       "title": "Meeting Room",
       "kind": "discovery",
-      "scene": {
-        "image": "ui/scenes/interview.svg",
-        "alt": "A meeting room with a window over the city, a whiteboard titled Kickoff · Zoo AI Assistants, and a long table."
-      },
       "goal": "Ask up to 6 people one question each.",
       "helperText": "In consulting, the first meeting decides what you know. You can ask 6 of these 10 people one question each, and you can't take a question back. Constraints you don't ask about still exist. You'll just meet them later. Some questions matter much more to this client than others.",
       "reflectionPrompt": "Which question you didn't ask worries you most?",
@@ -308,10 +300,6 @@
       "id": "studio",
       "title": "Architecture Studio",
       "kind": "decisions",
-      "scene": {
-        "image": "ui/scenes/studio.svg",
-        "alt": "A whiteboard sketch of boxes and arrows, with one dashed box still undecided."
-      },
       "goal": "Sketch the system: structure, then models.",
       "helperText": "Decide how the two assistants relate, then pick a model approach for each. Each assistant's model counts for half on the meters, since together they make one design. Cards show typical cost and speed. The full trade-offs appear after you lock in.",
       "decisions": [
@@ -344,10 +332,6 @@
       "id": "archive",
       "title": "Records Archive",
       "kind": "decisions",
-      "scene": {
-        "image": "ui/scenes/archive.svg",
-        "alt": "Floor-to-ceiling shelves of colorful binders and manuals."
-      },
       "goal": "Decide what the assistants know.",
       "helperText": "Your team has 3 effort points this room. Doing every decision well costs 5, so you have to choose where effort matters most. The data you choose decides what each assistant can say, and what it might leak.",
       "effortBudget": 3,
@@ -384,10 +368,6 @@
       "id": "control",
       "title": "Safety Control Room",
       "kind": "decisions",
-      "scene": {
-        "image": "ui/scenes/control.svg",
-        "alt": "A dark control room with a row of monitor screens and a glowing shield."
-      },
       "goal": "Set the guardrails for each assistant.",
       "helperText": "Putting a person on every message would be safe but unaffordable. The skill here is choosing where people add the most value, and treating a public bot differently from a safety-critical staff tool.",
       "decisions": [
@@ -423,10 +403,6 @@
       "id": "ops",
       "title": "Launch Operations",
       "kind": "decisions",
-      "scene": {
-        "image": "ui/scenes/ops.svg",
-        "alt": "A launch dashboard with a go-live checklist and a rising bar chart."
-      },
       "goal": "Choose how to launch and what to watch.",
       "helperText": "Your launch plan changes how hard problems hit: a pilot surfaces them at smaller scale. Each monitoring tool can catch a matching kind of problem early. You can pick two.",
       "decisions": [
@@ -453,10 +429,6 @@
       "id": "news",
       "title": "Six Months Later",
       "kind": "consequences",
-      "scene": {
-        "image": "ui/scenes/news.svg",
-        "alt": "A wall of pinned newspaper clippings."
-      },
       "goal": "The headlines are in. Respond to each one.",
       "helperText": "Each headline traces back to decisions you made. An emergency fix recovers half the loss but costs budget. Accepting the loss saves money but leaves the damage.",
       "tradeOffCheck": {
@@ -467,10 +439,6 @@
       "id": "gallery",
       "title": "Debrief Gallery",
       "kind": "debrief",
-      "scene": {
-        "image": "ui/scenes/gallery.svg",
-        "alt": "A gallery wall of framed pictures."
-      },
       "goal": "See your design, reflect, and compare.",
       "helperText": "The dashed shape shows what this client needed: 7 on its high priorities (budget, privacy, fairness, accuracy, trust) and 5 on the rest. Compare your blueprint with a sample expert design. The sample is one defensible answer, not the only one.",
       "tradeOffCheck": {
